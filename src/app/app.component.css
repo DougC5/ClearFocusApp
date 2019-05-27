@@ -1,0 +1,10 @@
+/* Add Componet CSS Here */
+.example-container {
+    position: absolute;
+    top: 70px;
+    bottom: 50px;
+    left: 20px;
+    right: 20px;
+    background: #fff;
+  }
+

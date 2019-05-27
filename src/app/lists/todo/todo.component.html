@@ -1,0 +1,27 @@
+<form (submit)="onAddToDo(toDoForm)" #toDoForm="ngForm" class="m-2">
+
+  <div class="input-group mb-3">
+      <div class="input-group-prepend">
+
+        <button mat-raised-button
+        class="btn btn-outline-secondary" 
+        type="submit" 
+        id="addToDo">Add</button>
+      </div>
+
+      <mat-card>
+
+        <mat-form-field>
+          <input 
+          type="text"
+          name="toDoInput"  
+          matInput 
+          [(ngModel)]="enteredValue" 
+          placeholder="Add ToDo Here..."
+          ngModel>
+        </mat-form-field>
+
+      </mat-card>
+    </div>
+  
+</form>

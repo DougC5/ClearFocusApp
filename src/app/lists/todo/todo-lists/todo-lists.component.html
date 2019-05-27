@@ -1,0 +1,23 @@
+
+  <mat-accordion *ngIf="todos.length > 0">
+    <mat-expansion-panel *ngFor="let item of todos">
+
+      <mat-expansion-panel-header>
+        {{item.title}}
+      </mat-expansion-panel-header>
+
+      <p>Test Content</p>
+
+      <mat-action-row>
+        <button mat-button color="primary" >Edit</button>
+        <button mat-button color="warn" >Delete</button>
+      </mat-action-row>
+
+      
+    </mat-expansion-panel>
+  
+  </mat-accordion>
+
+<div class="noDos">
+  <p class="mat-body-1" *ngIf="todos.length <= 0" >No ToDos added yet</p>
+</div>
