@@ -4,9 +4,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
+Run `nodemon server.js` to start the noode server on `http://localhost:3000/` . 
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-Run `nodemon server.js` to start the noode server on `http://localhost:3000/` . 
+
 
 ## Code scaffolding
 
