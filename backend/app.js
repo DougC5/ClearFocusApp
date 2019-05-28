@@ -1,7 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const Todo = require('./models/todo');
 
 const app = express();
+
+mongoose.connect("mongodb+srv://RWuser:4am5BT89G4NoNU@cluster0-2yhie.mongodb.net/clearfocus?retryWrites=true", { useNewUrlParser: true })
+.then(() => {
+    console.log('connected to the database!!!');
+})
+.catch((err) => {
+    console.error('connection failed', err.stack);
+});
 
 app.use(bodyParser.json());
 
@@ -15,32 +26,27 @@ app.use((req, res, next) => {
 });
 
 app.post('/api/todos', (req, res, next)=>{
-    const todo = req.body;
+    const todo = new Todo({
+        title: req.body.title,
+        project: req.body.project
+    });
     console.log(todo);
+    todo.save();
     res.status(201).json({
         message: 'todo added successfully'
     });
 });
 
 app.get('/api/todos', (req, res, next)=>{
-    const todos = [
-        {
-            id: '1gfgdf555',
-            title: 'todo 1 from server'
-        },
-        {
-            id: 'josdhgr85',
-            title: 'Second todo 2 from server'
-        },
-        {
-            id: 'iuwhefnjd87t',
-            title: 'Third todo 3 from server'
-        }
-    ];
-    res.status(200).json({
-        message: 'Todos fetched successfully',
-        todos: todos 
+    Todo.find()
+    .then(documents =>{
+        console.log(documents);
+        res.status(200).json({
+            message: 'Todos fetched successfully',
+            todos: documents 
+        });
     });
+    
 });
 
 module.exports = app;

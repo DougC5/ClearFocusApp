@@ -23,7 +23,7 @@ export class TodoService {
     }
 
     addTodo(title: string) {
-        const todo: Todo = {id: null, title: title};
+        const todo: Todo = {id: null, title: title, project: 'example project'};
         this.http.post<{message: string}>('http://localhost:3000/api/todos', todo)
         .subscribe((responseData) => {
             console.log(responseData);
