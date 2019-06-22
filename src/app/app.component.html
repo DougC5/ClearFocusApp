@@ -6,6 +6,7 @@
 
       
 <main>
+
     <mat-sidenav-container class="example-container">       
     
         <mat-sidenav mode="side" opened>
@@ -13,8 +14,9 @@
         </mat-sidenav>
     
         <mat-sidenav-content>
-            <app-todo></app-todo>
-            <app-todo-lists></app-todo-lists>
+            <router-outlet></router-outlet>
+            <!-- <app-todo></app-todo>
+            <app-todo-lists></app-todo-lists> -->
         </mat-sidenav-content>
     
     </mat-sidenav-container>

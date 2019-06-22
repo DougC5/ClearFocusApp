@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './app.routing.modules';
 import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './nav/header/header.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,8 +12,7 @@ import { PurposeComponent } from './lists/purpose/purpose.component';
 import { ReferenceComponent } from './lists/reference/reference.component';
 import { TodoComponent } from './lists/todo/todo.component';
 import { VisionComponent } from './lists/vision/vision.component';
-import { WeekComponent } from './nav/week/week.component';
-import { MonthComponent } from './nav/month/month.component';
+import { MonthComponent } from './calendar/month/month.component';
 import { NavbarComponent } from './nav/navbar/navbar.component';
 import { TodoListsComponent } from './lists/todo/todo-lists/todo-lists.component';
 
@@ -25,6 +25,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
+import { TwoWeekComponent } from './calendar/two-week/two-week.component';
+import { QtrComponent } from './calendar/qtr/qtr.component';
 
 
 
@@ -37,14 +39,16 @@ import { HttpClientModule } from '@angular/common/http';
     ReferenceComponent,
     TodoComponent,
     VisionComponent,
-    WeekComponent,
     MonthComponent,
     NavbarComponent,
     HeaderComponent,
-    TodoListsComponent
+    TodoListsComponent,
+    TwoWeekComponent,
+    QtrComponent
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
