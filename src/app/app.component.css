@@ -1,10 +1,15 @@
 /* Add Componet CSS Here */
-.example-container {
+.mainContainer {
     position: absolute;
     top: 70px;
     bottom: 50px;
-    left: 20px;
-    right: 20px;
+    left: 0px;
+    right: 0px;
     background: #fff;
   }
 
+  
+/* 
+mat-drawer{
+  width: 400px; 
+} */

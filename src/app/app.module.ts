@@ -27,6 +27,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { TwoWeekComponent } from './calendar/two-week/two-week.component';
 import { QtrComponent } from './calendar/qtr/qtr.component';
+import { SmallBarComponent } from './nav/small-bar/small-bar.component';
+import { EditPaneComponent } from './nav/edit-pane/edit-pane.component';
 
 
 
@@ -44,7 +46,9 @@ import { QtrComponent } from './calendar/qtr/qtr.component';
     HeaderComponent,
     TodoListsComponent,
     TwoWeekComponent,
-    QtrComponent
+    QtrComponent,
+    SmallBarComponent,
+    EditPaneComponent
   ],
   imports: [
     BrowserModule,
