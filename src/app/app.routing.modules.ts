@@ -20,8 +20,7 @@ const routes: Routes = [
 
     {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
 
-    // {path: 'twoWeek', component: TwoWeekComponent},
-    {path: 'twoWeek', component: TodoListsComponent},
+    {path: 'twoWeek', component: TwoWeekComponent},
     {path: 'month', component: MonthComponent},
     {path: 'qtr', component: QtrComponent},
     
