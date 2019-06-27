@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { TodoService } from './lists/todo/todos.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
 
 
 @Component({
@@ -6,9 +8,14 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+
+  @ViewChild('editDrawer') public sidenav: MatSidenav;
+
+  constructor(public todoService: TodoService){   }
 
   nav = true;
+  editPane: boolean;
 
   navToggle() {
     if (this.nav) {
@@ -17,5 +24,14 @@ export class AppComponent {
       this.nav = true;
     }
   }
+
+  toggleEdit() {
+    this.sidenav.toggle();
+    // this.todoService.toggleEditPane(this.editPane);
+  }
+
+  ngOnInit(){
+    this.todoService.setSidenav(this.sidenav);
+    };
 
 }

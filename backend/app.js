@@ -30,6 +30,7 @@ app.use((req, res, next) => {
 app.post('/api/todos', (req, res, next)=>{
     const todo = new Todo({
         title: req.body.title,
+        type: req.body.type,
         project: req.body.project
     });
     console.log(todo);
@@ -46,6 +47,8 @@ app.put('/api/todos/:id', (req, res, next)=>{
     const todo = new Todo({
         _id: req.body._id,
         title: req.body.title,
+        type: req.body.type,
+        notes: req.body.notes,
         project: req.body.project
     });
     Todo.updateOne({_id: req.params.id}, todo).then(result => {

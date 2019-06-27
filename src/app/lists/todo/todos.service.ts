@@ -1,16 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { Todo } from './todo.model';
 import { Injectable } from '@angular/core';
-import { Subject } from "rxjs";
-import { post } from 'selenium-webdriver/http';
-import { viewParentEl } from '@angular/core/src/view/util';
+import { Subject} from "rxjs";
+import { MatSidenav } from '@angular/material';
+
 
 @Injectable({providedIn: 'root'})
 export class TodoService {
     private todos: Todo[] = [];
     private todosUpdated = new Subject<Todo[]>();
+    public editState: boolean;
+    private sidenav: MatSidenav;
+    private type: string;
 
-    constructor (private http: HttpClient) {}
+    constructor (private http: HttpClient) {    }
+
+    public setType(type: string) {
+        this.type = type;
+    }
+
+    public getType(){
+        return this.type;
+    }
+
+    public setSidenav(sidenav: MatSidenav) {
+        this.sidenav = sidenav;
+    }
+
+    public open() {
+        return this.sidenav.open();
+    }
+
+    public close() {
+        return this.sidenav.close();
+    }
+
+    public toggle(): void {
+    this.sidenav.toggle();
+   }
+
+
+    // constructor (private http: HttpClient) {    }
 
     getTodos() {
         this.http.get<{message: string, todos: Todo[]}>('http://localhost:3000/api/todos')
@@ -29,12 +59,28 @@ export class TodoService {
         return this.todosUpdated.asObservable();
     }
 
+    // getEditPaneStateListener(){
+    //     return this.editPaneState.asObservable();
+    // }
+
+    // getTodoPaneState(){
+    //     return this.editState;
+    // }
+
+
     getSingleTodo(id: string) {
         return {...this.todos.find(p => p._id === id)};
     }
 
-    addTodo(title: string) {
-        const todo: Todo = {_id: null, title: title, project: 'example project'};
+    addTodo(title: string, type: string) {
+        const todo: Todo = {
+            _id: null,
+            title: title,
+            type: type,
+            notes: null,
+            project: null,
+            children: null,
+            parent: null };
         this.http.post<{message: string, todoId: string}>('http://localhost:3000/api/todos/', todo)
         .subscribe((responseData) => {
             const todoId = responseData.todoId;
@@ -44,8 +90,15 @@ export class TodoService {
         });
     }
 
-    updateTodo(id: string, title: string){
-        const todo: Todo = {_id: id, title: title, project: 'example project'};
+    updateTodo(id: string, title: string, notes: string, type: string){
+        const todo: Todo = {
+            _id: id, 
+            title: title,
+            type: type,
+            notes: notes,
+            project: null,
+            children: null,
+            parent: null,};
         this.http.put('http://localhost:3000/api/todos/' + id, todo)
         .subscribe(response => {
             const updatedTodos = [...this.todos];
@@ -63,4 +116,5 @@ export class TodoService {
             this.todosUpdated.next([...this.todos]);
         });
     }
+
 }

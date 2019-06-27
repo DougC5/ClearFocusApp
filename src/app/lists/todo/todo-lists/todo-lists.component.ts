@@ -10,23 +10,32 @@ import { Subscription } from "rxjs";
 })
 export class TodoListsComponent implements OnInit, OnDestroy {
 
-  // todos = [
-  //   {title: 'first item', content: 'this is the 1st posts content'},
-  //   {title: 'Second item', content: 'this is the 2nd posts content'},
-  //   {title: 'Third item', content: 'this is the 3rd posts content'},
-  // ];
+  type: string;
+
+
+  toggleEdit() {
+    this.todoService.open();
+  }
+
 
   todos: Todo[] = [];
   private todoSub: Subscription;
 
-  constructor(public todoService: TodoService) { }
+  constructor(public todoService: TodoService) { 
+
+    console.log('Inside the TOOD LIST Component Constructor');
+  }
+
 
   ngOnInit() {
     this.todoService.getTodos();
     this.todoSub = this.todoService.getTodoUpdateListener()
     .subscribe((todos: Todo[]) => {
-      this.todos = todos;
-    });
+      this.todos = todos;});
+
+    // this.type = this.todoService.getType();
+    // console.log('NgOnInit: Todo-List', this.type);
+
   }
 
   onDelete(todoId: string) {

@@ -1,3 +1,4 @@
+import { EditPaneComponent } from './nav/edit-pane/edit-pane.component';
 import { QtrComponent } from './calendar/qtr/qtr.component';
 import { PurposeComponent } from './lists/purpose/purpose.component';
 import { VisionComponent } from './lists/vision/vision.component';
@@ -10,12 +11,17 @@ import { GoalsComponent } from './lists/goals/goals.component';
 import { ReferenceComponent } from './lists/reference/reference.component';
 import { TwoWeekComponent } from './calendar/two-week/two-week.component';
 import { MonthComponent } from './calendar/month/month.component';
+import { TodoComponent } from './lists/todo/todo.component';
 
 const routes: Routes = [
-    {path: '', component: TodoListsComponent},
-    {path: 'edit/:todoId', component: TodoListsComponent},
 
-    {path: 'twoWeek', component: TwoWeekComponent},
+    {path: '', redirectTo : '/todo', pathMatch : 'full'},
+    {path: 'todo', component: TodoComponent},
+
+    {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
+
+    // {path: 'twoWeek', component: TwoWeekComponent},
+    {path: 'twoWeek', component: TodoListsComponent},
     {path: 'month', component: MonthComponent},
     {path: 'qtr', component: QtrComponent},
     

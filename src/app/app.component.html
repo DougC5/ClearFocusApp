@@ -7,22 +7,6 @@
       
 <main>
 
-    <!-- <mat-sidenav-container class="example-container">       
-    
-        <mat-sidenav mode="side" opened>
-            <app-navbar></app-navbar>
-        </mat-sidenav>
-
-        <mat-sidenav position="end">End</mat-sidenav>
-    
-        <!-- <mat-sidenav-content>
-            <router-outlet></router-outlet>
-            <!-- <app-todo></app-todo>
-            <app-todo-lists></app-todo-lists> -->
-        <!-- </mat-sidenav-content> -->
-    
-    <!-- </mat-sidenav-container> -->
-
     <mat-drawer-container class="mainContainer" hasBackdrop="false">
 
         <mat-drawer #mainNav opened mode="side" *ngIf="nav"> 
@@ -35,11 +19,13 @@
                 <button mat-raised-button (click)="navToggle()"> --> </button>
             </mat-drawer>
         
-        <mat-drawer #editDrawer closed mode="side" position="end">Edit Pane Content</mat-drawer>
+        <mat-drawer #editDrawer class="editDrawer" name="editDrawer" mode="side" position="end">
+                <router-outlet name="sideEdit"></router-outlet>
+                <button mat-raised-button (click)="toggleEdit()">Close</button>
+        </mat-drawer>
         
         <mat-drawer-content>
                 <router-outlet></router-outlet>
-                <button mat-raised-button (click)="editDrawer.toggle()">Toggle drawer</button>
         </mat-drawer-content>
         
         
