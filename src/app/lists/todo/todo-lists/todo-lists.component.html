@@ -1,28 +1,28 @@
 
 <mat-accordion *ngIf="todos.length > 0">
-    <mat-expansion-panel *ngFor="let item of todos">
+  <mat-expansion-panel *ngFor="let item of todos">
 
-      <mat-expansion-panel-header>
-        {{item.title}}
-      </mat-expansion-panel-header>
+    <mat-expansion-panel-header>
+      {{item.title}}
+    </mat-expansion-panel-header>
 
-      <p>{{item.project}}</p>
+    <p>{{item.project}}</p>
 
-      <mat-action-row>
-        <button mat-button color="primary" 
-        (click)="toggleEdit()" 
-        [routerLink]="[{outlets: {sideEdit: ['edit', item._id]}}]"
-        >Edit</button>
+    <mat-action-row>
+      <button mat-button color="primary" 
+      (click)="toggleEdit()" 
+      [routerLink]="[{outlets: {sideEdit: ['edit', item._id]}}]"
+      >Edit</button>
 
-        <button mat-button color="warn" (click)="onDelete(item._id)" >Delete</button>
-      </mat-action-row>
+      <button mat-button color="warn" (click)="onDelete(item._id)" >Delete</button>
+    </mat-action-row>
 
-      
-    </mat-expansion-panel>
-  
-  </mat-accordion>
+    
+  </mat-expansion-panel>
+
+</mat-accordion>
 
 <div class="noDos">
-  <p class="mat-body-1" *ngIf="todos.length <= 0" >No ToDos added yet</p>
+<p class="mat-body-1" *ngIf="todos.length <= 0" >No ToDos added yet</p>
 </div>
 

@@ -16,7 +16,7 @@ export class EditPaneComponent implements OnInit {
   enteredValue = '';
   private todoId: string;
   todo: Todo;
-  type: string;
+  routeType: string;
 
   onEditToDo(form: NgForm) {
     if (form.value.editInput <= 0) {
@@ -38,13 +38,11 @@ export class EditPaneComponent implements OnInit {
 
    ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-
       this.todoId = paramMap.get('todoId');
-      // this.type = paramMap.get('type');
-
       console.log('Todo EDIT ID *Edit Pane* is: ', this.todoId);
-      // console.log('Todo EDIT TYPE is: ', this.type);
       this.todo = this.todoService.getSingleTodo(this.todoId);
+      this.routeType = this.todoService.getType();
+
 
     });
 

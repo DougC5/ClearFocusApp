@@ -15,7 +15,7 @@ export class TodoComponent implements OnInit, AfterViewInit {
   private mode = 'create';
   private todoId: string;
   todo: Todo;
-  type: 'todo';
+  routeType: string;
 
   onAddToDo(form: NgForm) {
 
@@ -31,12 +31,19 @@ export class TodoComponent implements OnInit, AfterViewInit {
   }
 
   constructor(public todoService: TodoService, public route: ActivatedRoute) {
-    console.log('TODO CONSTRUCTOR');
+    // console.log('TODO CONSTRUCTOR');
    }
 
    ngOnInit() {
-    // this.todoService.setType('todo');
-    console.log('TODO ONINIT');
+    this.route.url.subscribe((u) => {
+      try {
+      console.log("TODO COMPONENT ROUTE: ", this.route.snapshot.url[0].path);
+      this.routeType = this.route.snapshot.url[0].path;
+      }
+      catch{
+        console.log('routeType should be set to Todo');
+      }
+    });
    }
 
    ngAfterViewInit(){

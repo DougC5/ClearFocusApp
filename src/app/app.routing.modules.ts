@@ -15,8 +15,7 @@ import { TodoComponent } from './lists/todo/todo.component';
 
 const routes: Routes = [
 
-    {path: '', redirectTo : '/todo', pathMatch : 'full'},
-    {path: 'todo', component: TodoComponent},
+    {path: '', component: TodoComponent},
 
     {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
 
