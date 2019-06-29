@@ -1,9 +1,9 @@
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TodoService } from './../../lists/todo/todos.service';
 import { Todo } from './../../lists/todo/todo.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 
 
 @Component({
@@ -14,6 +14,7 @@ import { Component, OnInit } from '@angular/core';
 export class EditPaneComponent implements OnInit {
 
   enteredValue = '';
+  private sub: any;
   private todoId: string;
   todo: Todo;
   routeType: string;
@@ -28,25 +29,37 @@ export class EditPaneComponent implements OnInit {
         this.todoId,
         form.value.editInput,
         form.value.editNotes,
-        'todo');
+        this.routeType);
     }
 
   }
 
  
-  constructor(public todoService: TodoService, public route: ActivatedRoute) { }
+  constructor(public todoService: TodoService, private router: Router , public route: ActivatedRoute) { }
 
    ngOnInit() {
+    console.log('***IM INSIDE THE EDIT PANE ONINIT');
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.todoId = paramMap.get('todoId');
-      console.log('Todo EDIT ID *Edit Pane* is: ', this.todoId);
+      console.log('Todo EDIT ID *Edit Pane* is: ', paramMap);
       this.todo = this.todoService.getSingleTodo(this.todoId);
-      this.routeType = this.todoService.getType();
-
-
     });
 
-   }
+    this.routeType = this.todoService.getType();
 
+   }
 }
+
+
+// ngOnInit() {
+//   console.log('***IM INSIDE THE EDIT PANE ONINIT');
+//   this.route.paramMap.subscribe((paramMap: ParamMap) => {
+//     this.todoId = paramMap.get('todoId');
+//     console.log('Todo EDIT ID *Edit Pane* is: ', this.todoId);
+//     this.todo = this.todoService.getSingleTodo(this.todoId);
+//   });
+
+//   this.routeType = this.todoService.getType();
+
+//  }
 

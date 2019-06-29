@@ -10,7 +10,7 @@ import { Subscription } from "rxjs";
 })
 export class TodoListsComponent implements OnInit, OnDestroy {
 
-  type: string;
+  routeType: string;
 
 
   toggleEdit() {
@@ -28,13 +28,15 @@ export class TodoListsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.routeType = this.todoService.getType();
     this.todoService.getTodos();
     this.todoSub = this.todoService.getTodoUpdateListener()
     .subscribe((todos: Todo[]) => {
-      this.todos = todos;});
+      this.todos = todos.filter(t => t.type === this.routeType);
+    });
 
-    // this.type = this.todoService.getType();
-    // console.log('NgOnInit: Todo-List', this.type);
+  
+    console.log('NgOnInit: Todo-List', this.routeType);
 
   }
 

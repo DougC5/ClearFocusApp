@@ -17,10 +17,12 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.route.url.subscribe((u) => {
-      console.log("Projects COMPONENT ROUTE: ", this.route.snapshot.url[0].path);
-      this.routeType = this.route.snapshot.url[0].path;
-    });
+    // this.route.url.subscribe((u) => {
+    //   console.log("Projects COMPONENT ROUTE: ", this.route.snapshot);
+    //   //this.routeType = this.route.snapshot.url[0].path;
+      
+    // });
+    // this.todoService.setType(this.routeType);
   }
 
 }

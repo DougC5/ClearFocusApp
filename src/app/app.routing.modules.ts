@@ -13,22 +13,54 @@ import { TwoWeekComponent } from './calendar/two-week/two-week.component';
 import { MonthComponent } from './calendar/month/month.component';
 import { TodoComponent } from './lists/todo/todo.component';
 
+
 const routes: Routes = [
 
-    {path: '', component: TodoComponent},
+    
+    {path: '', redirectTo: 'ToDo', pathMatch: 'full' },
+    {path: 'ToDo',
+        children: [
+        {path: '', component: TodoComponent},
+        {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
+        ]
+},
 
-    {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
+    // {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
 
     {path: 'twoWeek', component: TwoWeekComponent},
     {path: 'month', component: MonthComponent},
     {path: 'qtr', component: QtrComponent},
     
 
-    {path: 'projects', component: ProjectsComponent},
-    {path: 'goals', component: GoalsComponent},
-    {path: 'vision', component: VisionComponent},
-    {path: 'purpose', component: PurposeComponent},
-    {path: 'reference', component: ReferenceComponent},
+    {path: 'projects',
+        children: [
+        {path: '', component: TodoComponent},
+        {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
+        ]},
+
+    {path: 'goals',
+    children: [
+        {path: '', component: TodoComponent},
+        {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
+        ]},
+
+    {path: 'vision',
+    children: [
+        {path: '', component: TodoComponent},
+        {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
+        ]},
+
+    {path: 'purpose',
+    children: [
+        {path: '', component: TodoComponent},
+        {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
+        ]},
+
+    {path: 'reference',
+    children: [
+        {path: '', component: TodoComponent},
+        {path: 'edit/:todoId', component: EditPaneComponent, outlet: 'sideEdit'},
+        ]},
 ]
 
 @NgModule({
