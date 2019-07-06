@@ -44,7 +44,7 @@ export class TodoComponent implements OnInit, AfterViewInit {
       catch{
         this.todoService.setType('ToDo');
         this.routeType = 'ToDo'
-        console.log('routeType should be set to Todo');
+        console.error('**** CATCH FUNCTION Triggered***');
       }
     });
    }

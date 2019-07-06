@@ -3,10 +3,6 @@
 class="m-2">
 
     <div class="input-group mb-3">
-        <!-- <div class="input-group-prepend">
-  
-          
-        </div> -->
   
         <mat-card>
 
@@ -40,9 +36,26 @@ class="m-2">
       matAutosizeMaxRows=5
       placeholder="Notes:"></textarea>
     </mat-form-field>
-
-    <app-parent-selector></app-parent-selector>
     
+  <!-- Parent Selector -->
+    <mat-form-field *ngIf="parentType != null" class="example-full-width">
+      <input 
+      type="text"
+      name="parentInput"
+      [ngModel]="todo?.parent"
+      placeholder="{{placeholder}}" 
+      aria-label="Assignee"
+      matInput 
+      [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option.title}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+      <!-- Submit Button -->
+
     <button mat-raised-button
           class="btn btn-outline-secondary" 
           type="submit" 
@@ -50,6 +63,8 @@ class="m-2">
 
   </form>
 
+  <!-- [formControl]="myControl"  -->
+  <!-- [ngModel]="todo?.parent" -->
   
 
 

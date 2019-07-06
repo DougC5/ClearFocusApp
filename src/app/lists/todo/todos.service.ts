@@ -11,7 +11,23 @@ export class TodoService {
     private todosUpdated = new Subject<Todo[]>();
     public editState: boolean;
     private sidenav: MatSidenav;
-    private type: string;
+    public type: string;
+
+    parent = {
+            ToDo: 'Projects',
+            Projects: 'Goals',
+            Goals: 'Vision',
+            Vision: 'Purpose',
+            Purpose: null,
+        }
+
+    child = {
+            ToDo: null,
+            Projects: 'Todo',
+            Goals: 'Projects',
+            Vision: 'Goals',
+            Purpose: 'Vision',
+        }
 
     constructor (private http: HttpClient) {    }
 
@@ -40,7 +56,13 @@ export class TodoService {
    }
 
 
-    // constructor (private http: HttpClient) {    }
+    public getParentType(key: string){
+        return this.parent[key];
+    }
+
+    getParentTodosArray(){
+        return [...this.todos.filter(p => p.type === this.getParentType(this.type))];
+    }
 
     getTodos() {
         this.http.get<{message: string, todos: Todo[]}>('http://localhost:3000/api/todos')
@@ -58,14 +80,6 @@ export class TodoService {
     getTodoUpdateListener() {
         return this.todosUpdated.asObservable();
     }
-
-    // getEditPaneStateListener(){
-    //     return this.editPaneState.asObservable();
-    // }
-
-    // getTodoPaneState(){
-    //     return this.editState;
-    // }
 
 
     getSingleTodo(id: string) {
@@ -90,7 +104,7 @@ export class TodoService {
         });
     }
 
-    updateTodo(id: string, title: string, notes: string, type: string){
+    updateTodo(id: string, title: string, notes: string, type: string, parent: string){
         const todo: Todo = {
             _id: id, 
             title: title,
@@ -98,7 +112,7 @@ export class TodoService {
             notes: notes,
             project: null,
             children: null,
-            parent: null,};
+            parent: parent,};
         this.http.put('http://localhost:3000/api/todos/' + id, todo)
         .subscribe(response => {
             const updatedTodos = [...this.todos];

@@ -23,7 +23,6 @@ import { TwoWeekComponent } from './calendar/two-week/two-week.component';
 import { QtrComponent } from './calendar/qtr/qtr.component';
 import { SmallBarComponent } from './nav/small-bar/small-bar.component';
 import { EditPaneComponent } from './nav/edit-pane/edit-pane.component';
-import { ParentSelectorComponent } from './parent-selector/parent-selector.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
@@ -40,7 +39,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     QtrComponent,
     SmallBarComponent,
     EditPaneComponent,
-    ParentSelectorComponent,
   ],
   imports: [
     BrowserModule,

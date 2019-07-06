@@ -49,7 +49,8 @@ app.put('/api/todos/:id', (req, res, next)=>{
         title: req.body.title,
         type: req.body.type,
         notes: req.body.notes,
-        project: req.body.project
+        project: req.body.project,
+        parent: req.body.parent
     });
     Todo.updateOne({_id: req.params.id}, todo).then(result => {
         console.log(result);

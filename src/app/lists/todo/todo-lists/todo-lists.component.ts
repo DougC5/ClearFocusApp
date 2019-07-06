@@ -15,6 +15,7 @@ export class TodoListsComponent implements OnInit, OnDestroy {
 
   toggleEdit() {
     this.todoService.open();
+    console.log('NgOnInit: Todo-List EDIT', this.todos);
   }
 
 
@@ -36,7 +37,7 @@ export class TodoListsComponent implements OnInit, OnDestroy {
     });
 
   
-    console.log('NgOnInit: Todo-List', this.routeType);
+    console.log('NgOnInit: Todo-List', this.todos);
 
   }
 
