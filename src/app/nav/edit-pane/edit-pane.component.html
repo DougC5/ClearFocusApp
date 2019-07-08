@@ -16,7 +16,7 @@ class="m-2">
             name="editInput"  
             matInput
             [ngModel]="todo?.title"
-            placeholder="Edit ToDo Here..."
+            placeholder="Edit {{routeType}} Here..."
             ngModel>
           </mat-form-field>
   
@@ -41,9 +41,15 @@ class="m-2">
       placeholder="Notes:"></textarea>
     </mat-form-field>
 
+    <app-parent-selector></app-parent-selector>
+    
     <button mat-raised-button
           class="btn btn-outline-secondary" 
           type="submit" 
           id="addToDo">Update</button>
 
   </form>
+
+  
+
+
