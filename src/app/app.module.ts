@@ -11,7 +11,7 @@ import { NavbarComponent } from './nav/navbar/navbar.component';
 import { TodoListsComponent } from './lists/todo/todo-lists/todo-lists.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatCardModule, MatButtonModule, MatSelectModule } from '@angular/material';
+import { MatInputModule, MatCardModule, MatButtonModule, MatSelectModule, MatIconModule, MatTableModule, MatCheckboxModule } from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -57,7 +57,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     HttpClientModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule,
+    MatTableModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

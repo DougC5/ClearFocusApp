@@ -24,6 +24,7 @@ export class EditPaneComponent implements OnInit {
   routeType: string;
   parentTodo: string;
   placeholder: string;
+  value: string;
 
   //Parent Controls
   myControl = new FormControl();
@@ -43,11 +44,16 @@ export class EditPaneComponent implements OnInit {
         form.value.editInput,
         form.value.editNotes,
         this.routeType,
-        form.value.parentInput._id);
-        console.log('Parent Input: ', form.value.parentInput._id)
+        this.myControl.value._id
+        );
+        console.log('Parent Input: ')
+        this.placeholder = this.myControl.value.title;
+        this.myControl.reset({ value: '', disabled: false });
+
     }
 
   }
+  // form.value.parentInput._id
 
  
   constructor(public todoService: TodoService, public route: ActivatedRoute) { }
@@ -77,9 +83,6 @@ export class EditPaneComponent implements OnInit {
     this.todoP = this.todoService.getSingleTodo(this.todo.parent);
     this.parentList = this.todoService.getParentTodosArray()
 
-    
-
-    
 
     console.log('**SELECTOR** Route: ', this.routeType, ' Parent: ', this.parentList)
     this.filteredOptions = this.myControl.valueChanges

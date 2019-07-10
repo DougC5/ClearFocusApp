@@ -10,22 +10,16 @@ import { Subscription } from "rxjs";
 })
 export class TodoListsComponent implements OnInit, OnDestroy {
 
-  routeType: string;
-
-
-  toggleEdit() {
-    this.todoService.open();
-    console.log('NgOnInit: Todo-List EDIT', this.todos);
-  }
-
-
   todos: Todo[] = [];
+  parent: Todo;
   private todoSub: Subscription;
+  routeType: string;
+  displayedColumns = ['position', 'name', 'parent', 'edit'];
+  parentTodo: string;
+  editID: string;
 
-  constructor(public todoService: TodoService) { 
 
-    console.log('Inside the TOOD LIST Component Constructor');
-  }
+  constructor(public todoService: TodoService) { }
 
 
   ngOnInit() {
@@ -39,6 +33,22 @@ export class TodoListsComponent implements OnInit, OnDestroy {
   
     console.log('NgOnInit: Todo-List', this.todos);
 
+  }
+
+  toggleEdit(id) {
+    if (id !== this.editID){
+      this.todoService.open();
+      this.editID = id;
+    } else {
+      this.todoService.toggle();
+      this.editID = id;
+    }
+
+  }
+
+  getParentName(id){
+    this.parent = this.todoService.getSingleTodo(id)
+    return this.parent.title;
   }
 
   onDelete(todoId: string) {

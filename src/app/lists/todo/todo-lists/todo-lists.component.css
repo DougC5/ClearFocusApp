@@ -6,6 +6,31 @@ mat-accordion{
     /* margin: auto; */
 }
 
+table {
+    width: 100%;
+  }
+
+  .mat-header-cell{
+      font-size: 1rem;
+      text-transform: uppercase;
+  }
+
+.mainTask{
+    width: 60%;
+}
+
+.mainParent{
+    width: 20%;
+}
+
+.completedButton {
+    width: 10%;
+}
+
+.editButton {
+    width: 10%;
+}
+
 .noDos{
     text-align: center;
 }

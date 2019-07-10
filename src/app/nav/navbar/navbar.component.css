@@ -3,3 +3,20 @@
 button{
     margin: 5px 5px;
 }
+
+.mat-list-item{
+    color: #fff !important;
+    padding-right: 0px !important;
+}
+
+.active-list-item {
+    background: #555 !important; /* Note: You could also use a custom theme */
+  }
+
+  .mat-divider{
+    border-top-color: #aaa;
+}
+
+  .mat-icon{
+      margin-right: 15px;
+  }

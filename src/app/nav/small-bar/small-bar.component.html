@@ -1,27 +1,49 @@
 <nav class="lists-scroll">
     <!-- <div class="my-2"> -->
         <div class="mt-2">
-          <button mat-raised-button routerLink="/twoWeek" >2 Week</button>
+          <button color="primary" mat-raised-button routerLink="/twoWeek" >2 Week</button>
         </div>
     
         <div class="my-2">
-          <button mat-raised-button routerLink="/month" >Monthly</button>
+          <button color="primary" mat-raised-button routerLink="/month" >Monthly</button>
         </div>
   
         <div class="mb-2">
-          <button mat-raised-button routerLink="/qtr" >QTR</button>
+          <button color="primary" mat-raised-button routerLink="/qtr" >QTR</button>
         </div>
         <mat-divider></mat-divider>
     <!-- </div> -->
     
-    <mat-nav-list>
-        <a mat-list-item routerLink="/"> TD </a>
+    <mat-nav-list class="linkList">
+        <a mat-list-item routerLink="/ToDo" 
+        routerLinkActive="active-list-item"> 
+        <mat-icon>create</mat-icon></a>
+  
         <mat-divider></mat-divider>
-        <a mat-list-item routerLink="/projects"> P </a>
+  
+        <a mat-list-item routerLink="/Projects" 
+        routerLinkActive="active-list-item"> 
+        <mat-icon>build</mat-icon> </a>
+  
         <mat-divider></mat-divider>
-        <a mat-list-item routerLink="/goals"> 1 - 2 </a>
-        <a mat-list-item routerLink="/vision"> 3 - 5 </a>
-        <a mat-list-item routerLink="/purpose"> P&P </a>
+  
+        <a mat-list-item routerLink="/Goals"
+        routerLinkActive="active-list-item">
+        <mat-icon>domain</mat-icon> </a>
+  
+        <a mat-list-item routerLink="/Vision" 
+        routerLinkActive="active-list-item">
+        <mat-icon>landscape</mat-icon></a>
+  
+        <a mat-list-item routerLink="/Purpose" 
+        routerLinkActive="active-list-item">
+        <mat-icon>cloud</mat-icon></a>
+  
         <mat-divider></mat-divider>
-        <a mat-list-item routerLink="/reference"> Reference </a>
+  
+        <a mat-list-item routerLink="/Reference"> 
+          <mat-icon>folder_open</mat-icon></a>
+  
      </mat-nav-list>
+
+     <nav>

@@ -8,8 +8,16 @@
     background: #fff;
   }
 
-  
-
 .editDrawer{
   width: 400px; 
+}
+
+.navbar{
+  background: #666;
+  position: absolute;
+}
+
+button{
+  bottom: 15px !important;
+  position: absolute;
 }
