@@ -42,7 +42,7 @@ class="m-2">
       <input 
       type="text"
       name="parentInput"
-      [formControl]="myControl"
+      [(formControl)]="myControl"
       placeholder="{{placeholder}}" 
       aria-label="Assignee"
       matInput 
@@ -51,7 +51,10 @@ class="m-2">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
           {{option.title}}
         </mat-option>
+        
       </mat-autocomplete>
+  
+      
     </mat-form-field>
 
       <!-- Submit Button -->

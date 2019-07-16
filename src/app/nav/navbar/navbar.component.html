@@ -9,32 +9,39 @@
   
   <mat-nav-list class="linkList">
       <a mat-list-item routerLink="/ToDo" 
-      routerLinkActive="active-list-item"> 
+      routerLinkActive="active-list-item"
+      (click)="onCloseEditPane()"> 
       <mat-icon>create</mat-icon> Tasks </a>
 
       <mat-divider></mat-divider>
 
       <a mat-list-item routerLink="/Projects" 
-      routerLinkActive="active-list-item"> 
+      routerLinkActive="active-list-item"
+      (click)="onCloseEditPane()"> 
       <mat-icon>build</mat-icon>Projects </a>
 
       <mat-divider></mat-divider>
 
       <a mat-list-item routerLink="/Goals"
-      routerLinkActive="active-list-item">
+      routerLinkActive="active-list-item"
+      (click)="onCloseEditPane()">
       <mat-icon>domain</mat-icon> 1 - 2 yr Goals </a>
 
       <a mat-list-item routerLink="/Vision" 
-      routerLinkActive="active-list-item">
-      <mat-icon>landscape</mat-icon> 3 - 5 yr Vision </a>
+      routerLinkActive="active-list-item"
+      (click)="onCloseEditPane()">
+      <mat-icon>landscape</mat-icon
+        > 3 - 5 yr Vision </a>
 
       <a mat-list-item routerLink="/Purpose" 
-      routerLinkActive="active-list-item">
+      routerLinkActive="active-list-item"
+      (click)="onCloseEditPane()">
       <mat-icon>cloud</mat-icon> Purpose and Principles </a>
 
       <mat-divider></mat-divider>
 
-      <a mat-list-item routerLink="/Reference"> 
+      <a mat-list-item routerLink="/Reference"
+      (click)="onCloseEditPane()"> 
         <mat-icon>folder_open</mat-icon> Reference </a>
 
    </mat-nav-list>

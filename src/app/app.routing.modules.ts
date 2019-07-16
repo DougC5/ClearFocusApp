@@ -1,6 +1,5 @@
 import { EditPaneComponent } from './nav/edit-pane/edit-pane.component';
 import { QtrComponent } from './calendar/qtr/qtr.component';
-
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { TwoWeekComponent } from './calendar/two-week/two-week.component';

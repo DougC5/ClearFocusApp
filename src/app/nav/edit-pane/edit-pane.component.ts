@@ -4,9 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TodoService } from './../../lists/todo/todos.service';
 import { Todo } from './../../lists/todo/todo.model';
 import { Component, OnInit } from '@angular/core';
-
 import { startWith, map } from 'rxjs/operators';
-
 
 @Component({
   selector: 'app-edit-pane',
@@ -15,47 +13,88 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class EditPaneComponent implements OnInit {
 
-
   enteredValue = '';
   private todoId: string;
   todo: Todo;
   todoP: Todo;
   todoC: Todo[];
   routeType: string;
-  parentTodo: string;
   placeholder: string;
-  value: string;
 
-  //Parent Controls
+  // Parent Controls
   myControl = new FormControl();
   filteredOptions: Observable<Todo[]>;
   parentList: Todo[] = [];
   parentType: string;
+  parentId: string;
+  placeHolderObject: Todo;
 
   onEditToDo(form: NgForm) {
-    if (form.value.editInput <= 0) {
-      console.log('Triggering Return Clause')
-      return;
+
+
+    if (this.placeholder === this.todoP.title) {
+
+      if (this.myControl.value === undefined || this.myControl.value === null) {
+        this.parentId = this.placeHolderObject._id;
+
+      } else if (this.placeholder === this.myControl.value.title) {
+        this.parentId = this.myControl.value._id;
+        this.placeHolderObject = this.myControl.value;
+
+      } else {
+        if (this.myControl.value.title === undefined || this.myControl.value.title === null) {
+          this.parentId = this.placeHolderObject._id;
+
+        } else {
+          this.parentId = this.myControl.value._id;
+        }
+      }
+
+    } else if (this.placeholder !== 'Assign ' + this.parentType) {
+      if (this.myControl.value._id === undefined) {
+        this.parentId = this.placeHolderObject._id;
+
+      } else {
+       this.parentId = this.myControl.value._id;
+       this.placeHolderObject = this.myControl.value;
+
+      }
+
+    } else if (this.myControl.value === null) {
+        this.parentId = undefined;
+        this.placeholder = 'Assign ' + this.parentType;
 
     } else {
-      console.log('About to Update Todo#: ', this.todoId );
-      this.todoService.updateTodo(
+      this.parentId = this.myControl.value._id;
+      this.placeHolderObject = this.myControl.value;
+    }
+
+    this.todoService.updateTodo(
         this.todoId,
         form.value.editInput,
         form.value.editNotes,
         this.routeType,
-        this.myControl.value._id
+        this.parentId
         );
-        console.log('Parent Input: ')
-        this.placeholder = this.myControl.value.title;
-        this.myControl.reset({ value: '', disabled: false });
 
-    }
+    if (this.myControl.value === null || this.myControl.value === '') {
+          this.myControl.reset({ value: '', disabled: false });
+          if (this.placeHolderObject.title === undefined) {
+            this.placeholder = 'Assign ' + this.parentType;
+            } else {
+            this.placeholder = this.placeHolderObject.title;
+            }
+
+        } else {
+          this.placeHolderObject = this.myControl.value;
+          this.placeholder = this.myControl.value.title;
+          this.myControl.reset({ value: '', disabled: false });
+        }
 
   }
-  // form.value.parentInput._id
 
- 
+
+
   constructor(public todoService: TodoService, public route: ActivatedRoute) { }
 
    ngOnInit() {
@@ -63,28 +102,25 @@ export class EditPaneComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.todoId = paramMap.get('todoId');
       console.log('Todo EDIT ID *Edit Pane* is: ', paramMap);
+      this.routeType = this.todoService.getType();
       this.todo = this.todoService.getSingleTodo(this.todoId);
       this.todoP = this.todoService.getSingleTodo(this.todo.parent);
+      this.placeHolderObject = this.todoP;
       this.parentType =  this.todoService.getParentType(this.routeType);
-      if (this.todoP._id === undefined){
+
+      if (this.todoP._id === undefined) {
         this.placeholder = 'Assign ' + this.parentType;
       } else {
         this.placeholder = this.todoP.title;
       }
-      
-      console.log('Todo EDIT ID *PARENT* is: ', this.todoP);
+
     });
 
-    this.routeType = this.todoService.getType();
 
-    //Parent Selector******
-
-    this.parentType =  this.todoService.getParentType(this.routeType);
-    this.todoP = this.todoService.getSingleTodo(this.todo.parent);
-    this.parentList = this.todoService.getParentTodosArray()
+    this.parentList = this.todoService.getParentTodosArray();
 
 
-    console.log('**SELECTOR** Route: ', this.routeType, ' Parent: ', this.parentList)
+    console.log('**SELECTOR** Route: ', this.routeType, ' Parent: ', this.parentList);
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
@@ -92,7 +128,6 @@ export class EditPaneComponent implements OnInit {
         map(name => name ? this._filter(name) : this.parentList.slice()
       ));
 
-      console.log('Parent Item: ', this.todoP)
 
    }
 
