@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Hi {{data.title}}</h1>
+<div mat-dialog-content class="popupTextArea">
+  <p>Notes:</p>
+  <mat-form-field >
+  <textarea
+      class="popOutTextArea"
+      matInput
+      type="text"
+      [(ngModel)]="data.notes"
+      matTextareaAutosize 
+      matAutosizeMinRows=10 
+      matAutosizeMaxRows=30
+      ></textarea>
+  
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.notes" cdkFocusInitial>Ok</button>
+</div>

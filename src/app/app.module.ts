@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { TodoComponent } from './lists/todo/todo.component';
 import { MonthComponent } from './calendar/month/month.component';
@@ -11,7 +12,15 @@ import { NavbarComponent } from './nav/navbar/navbar.component';
 import { TodoListsComponent } from './lists/todo/todo-lists/todo-lists.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatCardModule, MatButtonModule, MatSelectModule, MatIconModule, MatTableModule, MatCheckboxModule } from '@angular/material';
+import { MatInputModule,
+  MatCardModule,
+  MatButtonModule,
+  MatSelectModule,
+  MatIconModule,
+  MatTableModule,
+  MatCheckboxModule,
+  MatProgressSpinnerModule,
+  MatDialogModule,} from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -22,10 +31,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { TwoWeekComponent } from './calendar/two-week/two-week.component';
 import { QtrComponent } from './calendar/qtr/qtr.component';
 import { SmallBarComponent } from './nav/small-bar/small-bar.component';
-import { EditPaneComponent } from './nav/edit-pane/edit-pane.component';
+import { EditPaneComponent, EditPaneNotesDialog } from './nav/edit-pane/edit-pane.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { DragAndDropModule } from 'angular-draggable-droppable';
+import { CalendarHeaderComponent } from './calendar/cal-utils/calendar-header.component';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -40,7 +53,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     QtrComponent,
     SmallBarComponent,
     EditPaneComponent,
+    CalendarHeaderComponent,
+    EditPaneNotesDialog
   ],
+
+  entryComponents: [EditPaneNotesDialog],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -62,9 +80,34 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatIconModule,
     MatTableModule,
     MatCheckboxModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    [
+      CalendarModule.forRoot({
+        provide: DateAdapter,
+        useFactory: adapterFactory
+      })
+    ],
+    DragAndDropModule,
+    CalendarModule,
+    CommonModule,
+
 
   ],
+
+  exports: [ EditPaneNotesDialog ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
+  // Ensure Angular destroys itself on hot reloads.
+  if (window['ngRef']) {
+    window['ngRef'].destroy();
+  }
+  window['ngRef'] = ref;
+
+  // Otherwise, log the boot error
+}).catch(err => console.error(err));

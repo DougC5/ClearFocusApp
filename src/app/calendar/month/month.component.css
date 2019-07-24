@@ -1,1 +1,35 @@
 /* CSS Placeholder */
+
+.drag-active {
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .drag-over {
+    background-color: #eee;
+  }
+
+  .mainHeader {
+    background-color: #eee;
+  }
+
+  .week-view-header{
+    background: red;
+  }
+
+  .headerRow{
+    background: #fff;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: sticky;
+    top: 85px
+  }
+
+  .sidebar{
+    position: sticky;
+    top: 85px
+  }
+
+  mat-spinner {
+    margin: auto;
+  }

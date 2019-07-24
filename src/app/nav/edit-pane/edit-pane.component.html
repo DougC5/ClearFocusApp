@@ -1,5 +1,7 @@
 
-<form #EditToDoForm="ngForm" (submit)="onEditToDo(EditToDoForm)"
+<mat-spinner *ngIf="isLoading" ></mat-spinner>
+
+<form *ngIf="!isLoading" #EditToDoForm="ngForm" (submit)="onEditToDo(EditToDoForm)"
 class="m-2">
 
     <div class="input-group mb-3">
@@ -11,7 +13,7 @@ class="m-2">
             type="text"
             name="editInput"  
             matInput
-            [ngModel]="todo?.title"
+            [(ngModel)]="todo.title"
             placeholder="Edit {{routeType}} Here..."
             ngModel>
           </mat-form-field>
@@ -30,11 +32,15 @@ class="m-2">
       matInput
       type="text"
       name="editNotes" 
-      [ngModel]="todo?.notes"
+      [ngModel]="todo.notes"
       matTextareaAutosize 
       matAutosizeMinRows=3 
       matAutosizeMaxRows=5
       placeholder="Notes:"></textarea>
+      <div mat-dialog-actions align="end">
+      <button mat-raised-button (click)="openDialog()"> <mat-icon>flip_to_front</mat-icon> 
+      </button>
+      </div>
     </mat-form-field>
     
   <!-- Parent Selector -->
@@ -61,10 +67,13 @@ class="m-2">
 
     <button mat-raised-button
           class="btn btn-outline-secondary" 
-          type="submit" 
-          id="addToDo">Update</button>
+          type="submit"
+          id="addToDo"
+          (click)="onCloseEditPane()">Update</button>
 
   </form>
+
+  
 
   <!-- [formControl]="myControl"  -->
   <!-- [ngModel]="todo?.parent" -->

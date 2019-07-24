@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const todoRoutes = require("./routes/todos");
+
 const Todo = require('./models/todo');
 
 const app = express();
@@ -17,6 +19,7 @@ mongoose.connect("mongodb+srv://CFAuser:IUPrXMgPSOZofFrA@cluster0-io0te.mongodb.
 });
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false}));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,57 +30,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/api/todos', (req, res, next)=>{
-    const todo = new Todo({
-        title: req.body.title,
-        type: req.body.type,
-        project: req.body.project
-    });
-    console.log(todo);
-    todo.save().then(createdTodo =>{
-        res.status(201).json({
-            message: 'todo added successfully!!!',
-            todoId: createdTodo._id
-        });
-    });
-    
-});
-
-app.put('/api/todos/:id', (req, res, next)=>{
-    const todo = new Todo({
-        _id: req.body._id,
-        title: req.body.title,
-        type: req.body.type,
-        notes: req.body.notes,
-        project: req.body.project,
-        parent: req.body.parent
-    });
-    Todo.updateOne({_id: req.params.id}, todo).then(result => {
-        console.log(result);
-        res.status(200).json({message: 'todo updated successfully!!!'})
-    })
-});
-
-app.get('/api/todos', (req, res, next)=>{
-    Todo.find()
-    .then(documents =>{
-        console.log(documents);
-        res.status(200).json({
-            message: 'Todos fetched successfully',
-            todos: documents 
-        });
-    });
-});
-
-app.delete('/api/todos/:id', (req, res, next) =>{
- console.log(req.params.id);
- Todo.deleteOne({_id: req.params.id})
-.then(
-    console.log( req.params.id + ' ***Deleted***')
-);
- res.status(200).json({message: 'post deleted'});
-});
-
+app.use("/api/todos", todoRoutes);
 
 
 module.exports = app;

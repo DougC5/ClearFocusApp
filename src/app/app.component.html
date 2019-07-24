@@ -22,8 +22,15 @@
                     <button mat-raised-button (click)="navToggle()"> <mat-icon>arrow_forward</mat-icon> </button>
                 </mat-card-actions>
             </mat-drawer>
-        
-        <mat-drawer #editDrawer class="editDrawer" name="editDrawer" mode="side" position="end">
+
+        <mat-drawer 
+        #editDrawer 
+        hasBackdrop="true"
+        class="editDrawer" 
+        name="editDrawer" 
+        mode="side" 
+        position="end"
+        (keydown.escape)="close()">
                 <router-outlet name="sideEdit"></router-outlet>
                 <button mat-raised-button (click)="toggleEdit()">Close</button>
         </mat-drawer>
@@ -31,9 +38,11 @@
         <mat-drawer-content>
                 <router-outlet></router-outlet>
         </mat-drawer-content>
+
+    </mat-drawer-container>
         
         
-      </mat-drawer-container>
+     
 
 </main>
       

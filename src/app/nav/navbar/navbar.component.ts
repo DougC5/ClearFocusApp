@@ -10,8 +10,8 @@ export class NavbarComponent implements OnInit {
 
   constructor( public todoService: TodoService) { }
 
-  onCloseEditPane(){
-    this.todoService.close()
+  onCloseEditPane() {
+    this.todoService.close();
   }
 
   ngOnInit() {

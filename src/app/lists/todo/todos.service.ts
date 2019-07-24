@@ -3,6 +3,8 @@ import { Todo } from './todo.model';
 import { Injectable } from '@angular/core';
 import { Subject} from "rxjs";
 import { MatSidenav } from '@angular/material';
+import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 
 @Injectable({providedIn: 'root'})
@@ -23,7 +25,7 @@ export class TodoService {
 
     child = {
             ToDo: null,
-            Projects: 'Todo',
+            Projects: 'ToDo',
             Goals: 'Projects',
             Vision: 'Goals',
             Purpose: 'Vision',
@@ -56,12 +58,20 @@ export class TodoService {
    }
 
 
-    public getParentType(key: string){
+    public getParentType(key: string) {
         return this.parent[key];
+    }
+
+    public getChildType(key: string) {
+        return this.child[key];
     }
 
     getParentTodosArray(){
         return [...this.todos.filter(p => p.type === this.getParentType(this.type))];
+    }
+
+    getChildTodosArray(){
+        return [...this.todos.filter(p => p.type === this.getChildType(this.type))];
     }
 
     getTodos() {
@@ -70,6 +80,10 @@ export class TodoService {
          this.todos = todoData.todos;
          this.todosUpdated.next([...this.todos]);
         });
+    }
+
+    public getTodosByType(type: string){
+        return [...this.todos.filter(p => p.type === type)];
     }
 
     getTodo(id: string) {
@@ -94,7 +108,17 @@ export class TodoService {
             notes: null,
             project: null,
             children: null,
-            parent: null };
+            parent: null,
+            color: null,
+            start: null,
+            isScheduledCal: false,
+            draggable: true,
+            end: null,
+            resizable: {
+                beforeStart: true,
+                afterEnd: true
+              }
+        };
         this.http.post<{message: string, todoId: string}>('http://localhost:3000/api/todos/', todo)
         .subscribe((responseData) => {
             const todoId = responseData.todoId;
@@ -104,7 +128,7 @@ export class TodoService {
         });
     }
 
-    updateTodo(id: string, title: string, notes: string, type: string, parent: string){
+    updateTodo(id: string, title: string, notes: string, type: string, parent: string, isScheduledCal: boolean, start: Date) {
         const todo: Todo = {
             _id: id, 
             title: title,
@@ -112,8 +136,32 @@ export class TodoService {
             notes: notes,
             project: null,
             children: null,
-            parent: parent,};
+            parent: parent,
+            isScheduledCal: isScheduledCal,
+            color: null,
+            start: start,
+
+            draggable: true};
         this.http.put('http://localhost:3000/api/todos/' + id, todo)
+        .subscribe(response => {
+            const updatedTodos = [...this.todos];
+            const oldTodoIndex = updatedTodos.findIndex(t => t._id === todo._id);
+            updatedTodos[oldTodoIndex] = todo;
+            this.todos = updatedTodos;
+            this.todosUpdated.next([...this.todos]);
+        });
+    }
+
+    updateCal(id: string, title: string, type: string, isScheduledCal: boolean, start: Date, end: Date ) {
+        const todo: Todo = {
+            _id: id,
+            title: title,
+            type: type,
+            isScheduledCal: isScheduledCal,
+            start: start,
+            end: end
+            };
+        this.http.patch('http://localhost:3000/api/todos/' + id, todo)
         .subscribe(response => {
             const updatedTodos = [...this.todos];
             const oldTodoIndex = updatedTodos.findIndex(t => t._id === todo._id);

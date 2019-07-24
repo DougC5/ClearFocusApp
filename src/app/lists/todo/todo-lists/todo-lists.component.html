@@ -1,7 +1,9 @@
+<!-- 
+<div class="example-container mat-elevation-z8"></div> -->
 
+<mat-spinner *ngIf="isLoading" ></mat-spinner>
 
-<div class="example-container mat-elevation-z8">
-  <table mat-table [dataSource]="todos">
+  <table *ngIf="!isLoading" mat-table [dataSource]="todos" multiTemplateDataRows>
 
 <!-- Position Column -->
 <ng-container matColumnDef="position" (click)="onDelete()">
@@ -21,13 +23,15 @@
 
 <!-- Parent Column -->
 <ng-container matColumnDef="parent">
-    <th mat-header-cell class="mainParent" *matHeaderCellDef> Parent </th>
+    <th mat-header-cell class="mainParent" *matHeaderCellDef> {{parentType}} </th>
     <td mat-cell *matCellDef="let todos"> {{getParentName(todos.parent)}} </td>
-  </ng-container>
+  </ng-container> 
+
+  
 
   <!-- Edit Button Column -->
 <ng-container matColumnDef="edit">
-    <th mat-header-cell class="editBbutton" *matHeaderCellDef> Edit </th>
+    <th mat-header-cell class="editButton" *matHeaderCellDef> Edit </th>
     <td mat-cell *matCellDef="let todos">
         <button mat-button color="primary" 
         (click)="toggleEdit(todos._id)" 
@@ -39,56 +43,57 @@
     </td>
   </ng-container>
 
-<tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>
-
-<!-- <mat-list *ngIf="todos.length > 0">
-  <h3 matSubheader>{{routeType}}</h3>
-  <mat-list-item *ngFor="let item of todos">
-     <mat-icon matListIcon>folder</mat-icon>
-     <h4 matLine>{{item.title}}</h4>
-     <p matLine class="demo-2"> {{item.notes}} </p>
-  </mat-list-item>
-  <mat-divider></mat-divider>
-  <h3 matSubheader>Parent</h3>
-  <mat-list-item *ngFor="let item of todos">
-     <mat-icon matListIcon>note</mat-icon>
-     <h4 matLine>{{item.parent}}</h4>
-     <p matLine class="demo-2"> {{item._id}} </p>
-  </mat-list-item>
-</mat-list> -->
-
-
-
-
-
-<!-- <mat-accordion *ngIf="todos.length > 0">
-  <mat-expansion-panel *ngFor="let item of todos">
-
-    <mat-expansion-panel-header>
-      {{item.title}}
-    </mat-expansion-panel-header>
-
-    <p>{{item.project}}</p>
-
-    <mat-action-row>
-      <button mat-button color="primary" 
-      (click)="toggleEdit()" 
-      [routerLink]="[{outlets: {sideEdit: ['edit', item._id]}}]"
-      >Edit</button>
-
-      <button mat-button color="warn" (click)="onDelete(item._id)" >Delete</button>
-    </mat-action-row>
-
-    
-  </mat-expansion-panel>
-
-</mat-accordion>
-
-<div class="noDos">
-<p class="mat-body-1" *ngIf="todos.length <= 0" >No {{routeType}} added yet</p>
+<!-- <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
+  <!-- </table>
 </div> -->
 
+<ng-container matColumnDef="expandedDetail">
+  <td mat-cell *matCellDef="let todos" [attr.colspan]="displayedColumns.length">
+    <div class="example-element-detail"
+         [@detailExpand]="todos == expandedElement ? 'expanded' : 'collapsed'">
+         <div class="example-element-diagram">
+          <div class="attachedParent">Attached {{parentType}}: </div>
+          <div *ngIf="getParentName(todos.parent)" 
+          class="example-element-position">
+          - {{getParentName(todos.parent)}} </div>
+          <!-- <div class="example-element-symbol"> {{todos.parent}} </div>
+          <div class="example-element-name"> {{todos.title}} </div>
+          <div class="example-element-weight"> {{todos.parent}} </div> -->
+        </div>
+        <div *ngIf="routeType !== 'ToDo'" class="example-element-diagram">
+          <div class="attachedParent">Attached {{childType}}: </div>
+          <div *ngFor="let item of childArray" class="example-element-position">
+            <div class="attachedChildren" *ngIf="todos._id === item.parent" >
+             - {{item.title}}
+            </div>
+          </div>
+          
+          <!-- <div class="example-element-symbol"> {{todos.parent}} </div>
+          <div class="example-element-name"> {{todos.title}} </div>
+          <div class="example-element-weight"> {{todos.parent}} </div> -->
+        </div>
+        <div class="example-element-diagram">
+          <p class="attachedParent"> Notes: </p>
+          <p>
+            {{todos.notes}}
+          </p>
+        
+      </div>
+    </div>
+  </td>
+</ng-container>
 
+<!-- <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns;  sticky: true"></tr>
+  <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
+
+<p class="info-text mat-body-1" *ngIf="todos.length <=0 && !isLoading">No {{routeType}} added yet!</p>

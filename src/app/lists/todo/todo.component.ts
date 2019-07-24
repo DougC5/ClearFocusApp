@@ -13,10 +13,11 @@ export class TodoComponent implements OnInit, AfterViewInit {
 
   enteredValue = '';
   private mode = 'create';
-  private todoId: string;
   todo: Todo;
   routeType: string;
 
+
+  // Adds task
   onAddToDo(form: NgForm) {
 
     if (form.value.toDoInput <= 0) {
@@ -26,15 +27,13 @@ export class TodoComponent implements OnInit, AfterViewInit {
     console.log('this.mode (if) is: ', this.mode);
     this.todoService.addTodo(form.value.toDoInput, this.routeType);
     }
-
     form.resetForm();
   }
 
-  constructor(public todoService: TodoService, public route: ActivatedRoute) {
-    // console.log('TODO CONSTRUCTOR');
-   }
+  constructor(public todoService: TodoService, public route: ActivatedRoute) {}
 
    ngOnInit() {
+     // Get the current route type and save it in a variable
     this.route.url.subscribe((u) => {
       try {
       console.log("TODO COMPONENT ROUTE: ", this.route.parent.snapshot.url[0].path);
@@ -48,7 +47,7 @@ export class TodoComponent implements OnInit, AfterViewInit {
       }
     });
    }
-
+   
    ngAfterViewInit(){
     this.todoService.setType(this.routeType);
  
