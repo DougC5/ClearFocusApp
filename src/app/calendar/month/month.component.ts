@@ -2,7 +2,6 @@
 import { colors } from './../cal-utils/colors';
 import { Component, OnInit } from '@angular/core';
 import {
-  CalendarEvent,
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
@@ -10,7 +9,39 @@ import { Subject } from 'rxjs';
 import { Todo } from 'src/app/lists/todo/todo.model';
 import { TodoService } from 'src/app/lists/todo/todos.service';
 import { addMinutes } from 'date-fns';
- 
+
+// Brought in interfaces from "angular-calendar" to add needed keys
+interface EventColor {
+  primary: string;
+  secondary: string;
+}
+interface EventAction {
+  id?: string | number;
+  label: string;
+  cssClass?: string;
+  onClick({ event }: {
+      event: CalendarEvent;
+  }): any;
+}
+interface CalendarEvent<MetaType = any> {
+  _id?: string;
+  start: Date;
+  end?: Date;
+  isScheduledCal?: boolean;
+  title: string;
+  type?: string;
+  color?: EventColor;
+  actions?: EventAction[];
+  allDay?: boolean;
+  cssClass?: string;
+  resizable?: {
+      beforeStart?: boolean;
+      afterEnd?: boolean;
+  };
+  draggable?: boolean;
+  meta?: MetaType;
+}
+
 @Component({
   selector: 'app-month',
   templateUrl: './month.component.html',

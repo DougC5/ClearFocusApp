@@ -24,7 +24,7 @@ export class EditPaneComponent implements OnInit, OnDestroy {
   routeType: string;
   placeholder: string;
   isloading = false;
-  newNotes: string
+  newNotes: string;
 
 
   myControl = new FormControl();
