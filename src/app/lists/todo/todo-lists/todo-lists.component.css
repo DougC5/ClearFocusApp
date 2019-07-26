@@ -1,11 +1,111 @@
-mat-accordion{
-    
-    display: block;
-    margin-top: 1rem;
-    /* width: 90%; */
-    /* margin: auto; */
+
+ .mat-header-cell{
+      font-size: 1rem;
+      text-transform: uppercase;
+  }
+
+.mainTask{
+    width: 60%;
+}
+
+.mainParent{
+    width: 20%;
+}
+
+.completedButton {
+    width: 10%;
+}
+
+.editButton {
+    width: 10%;
 }
 
 .noDos{
     text-align: center;
 }
+
+table {
+    width: 100%;
+  }
+  
+  tr.example-detail-row {
+    height: 0;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):hover {
+    background: #aaa;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):active {
+    background: #aaa;
+  }
+  
+  .example-element-row td {
+    border-bottom-width: 0;
+  }
+  
+  .example-element-detail {
+    margin: 0px 75px;
+    overflow: scroll;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .example-element-diagram {
+    min-width: 150px;
+    border: 2px solid black;
+    padding: 8px;
+    margin: 8px 0;
+    max-width: 300px;
+    height: auto;
+  }
+  
+  .example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+  }
+  
+  .example-element-description {
+    padding: 16px;
+  }
+  
+  .example-element-description-attribution {
+    opacity: 0.5;
+  }
+
+  .attachedParent {
+    text-align: center;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+
+  .attachedChildren{
+    margin: 10px 15px;
+  }
+
+  mat-spinner {
+    margin: auto;
+  }
+
+  .popupTextArea{
+    width: 100%;
+    border: 2px solid black;
+    line-height: 1.5rem
+  }
+
+  .cell {
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.expandedCell{
+  /* padding-top: 15px; */
+  /* padding-bottom: 10px; */
+}
+
+.mat-badge {
+  padding-right: 10px;
+}
+
+  

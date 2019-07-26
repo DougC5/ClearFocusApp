@@ -1,5 +1,5 @@
 import { TodoService } from './lists/todo/todos.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 
 
@@ -12,10 +12,28 @@ export class AppComponent implements OnInit{
 
   @ViewChild('editDrawer') public sidenav: MatSidenav;
 
-  constructor(public todoService: TodoService){   }
+  //ATTEMPT TO GET THE OUTSIDE CLICK TO CLOSE THE EDIT PANE
+
+  // @HostListener('document:click', ['$event'])
+  // clickout(event) {
+  //   if (this.eRef.nativeElement.contains(event.target) && event.target.className !== "mat-drawer-inner-container" && event.target.localName !== 'mat-icon') {
+  //     console.log("click outside: ", this.eRef)
+  //     this.sidenav.close();
+  //   } else {
+  //     console.log("else: ", this.eRef)
+  //     return
+  //   }
+  // }
+
+  constructor(public todoService: TodoService, private eRef: ElementRef){ }
 
   nav = true;
   editPane: boolean;
+
+
+  close() {
+    this.sidenav.close();
+  }
 
   navToggle() {
     if (this.nav) {

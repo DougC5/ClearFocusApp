@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <p>Notes:</p>
+  <mat-form-field >
+  <textarea
+      class="popOutTextArea"
+      matInput
+      type="text"
+      [(ngModel)]="data.notes"
+      matTextareaAutosize 
+      matAutosizeMinRows=10 
+      matAutosizeMaxRows=20
+      ></textarea>
+  
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="d-flex bd-highlight align-bottom">
+
+  <div class="p-2 bd-highlight">
+    <button mat-raised-button
+    class="p-2 bd-highlight"
+    [mat-dialog-close]="data" 
+    cdkFocusInitial>
+    Update</button>
+  
+    <button mat-raised-button 
+    class="p-2 bd-highlight"
+    (click)="onNoClick()">
+    Cancel</button>
+  </div>
+
+  <div  class="ml-auto p-2 bd-highlight">
+    <img *ngIf="filePreview !== '' && filePreview " class="file-preview" [src]="filePreview" alt="">
+  </div>
+
+  <button mat-raised-button
+    class="p-2 bd-highlight"
+    type="button"
+    (click)="filepicker.click()"
+    >Add File</button>
+
+    <input 
+    type="file" 
+    #filepicker
+    (change)=onFileAdded($event)>
+  
+</div>

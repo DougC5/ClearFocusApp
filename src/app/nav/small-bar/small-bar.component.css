@@ -1,1 +1,22 @@
 /* CSS Placeholder */
+
+.lists-scroll{
+    text-align: center;
+}
+
+.mat-list-item{
+    color: #fff !important;
+    padding-right: 0px !important;
+}
+
+.active-list-item {
+    background: #444 !important; /* Note: You could also use a custom theme */
+  }
+
+  .mat-divider{
+      border-top-color: #aaa;
+  }
+
+  .mat-icon{
+      margin-left: 10px;
+  }

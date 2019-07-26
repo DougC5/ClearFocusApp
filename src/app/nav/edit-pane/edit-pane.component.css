@@ -5,3 +5,40 @@ mat-card{
 mat-form-field, input{
     width: 100%;
 }
+
+.mat-spinner {
+    margin: auto;
+  }
+  
+.popOutTextArea{
+    width: 100%;
+    line-height: 1.5;
+}
+
+input[type="file"]{
+    visibility: hidden;
+}
+
+ /* textarea, input {
+    width: 100%;
+} */
+
+.notesBox{
+    display:inline-block;
+    width: 100%;
+    height: 100%
+}
+.notesText{
+    float:left;
+    line-height: 1.5;
+}
+
+.notesIcon{
+    float: right;
+
+}
+
+.file-preview { 
+    height: 3rem;
+    margin: 1rem, 0;
+}

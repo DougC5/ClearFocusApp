@@ -1,3 +1,120 @@
-<p>
-  month works!
-</p>
+
+<!-- <link href="https://unpkg.com/bootstrap-css-only@4.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
+<link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet">
+<link href="https://unpkg.com/angular-calendar@0.27.13/css/angular-calendar.css" rel="stylesheet">
+<!-- <link href="https://unpkg.com/flatpickr@4.6.1/dist/flatpickr.css" rel="stylesheet"> -->
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+
+<div *ngIf="!isLoading" class="container">
+<div class="row mainHeader sticky-top ">
+  
+    <div class="col-md-9 ">
+      <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+      </mwl-demo-utils-calendar-header>
+    </div>
+</div>
+
+
+    <ng-template
+      #defaultTemplate1
+      let-days="days"
+      let-locale="locale"
+      let-dayHeaderClicked="dayHeaderClicked"
+      let-eventDropped="eventDropped">
+      <div class="row headerRow sticky-top">
+      <div class="col cal-day-headers">
+        <div 
+        class="cal-header"
+          *ngFor="let day of days"
+          [class.cal-past]="day.isPast"
+          [class.cal-today]="day.isToday"
+          [class.cal-future]="day.isFuture"
+          [class.cal-weekend]="day.isWeekend"
+          [ngClass]="day.cssClass"
+          (mwlClick)="dayHeaderClicked.emit({day: day})"
+          mwlDroppable
+          dragOverClass="cal-drag-over"
+          (drop)="eventDropped.emit({event: $event.dropData.event, newStart: day.date})">
+          <b>{{ day.date | calendarDate:'weekViewColumnHeader':locale }}</b><br>
+          <span>{{ day.date | calendarDate:'weekViewColumnSubHeader':locale }}</span>
+        </div>
+      </div>
+      </div>
+      <br>
+    </ng-template>
+
+
+<div class="row">
+    <div class="col-md-9">
+  
+      <div [ngSwitch]="view">
+        <mwl-calendar-month-view
+          *ngSwitchCase="CalendarView.Month"
+          [viewDate]="viewDate"
+          [events]="events"
+          [activeDayIsOpen]="activeDayIsOpen"
+          [refresh]="refresh"
+          (eventTimesChanged)="eventDropped($event)"
+        >
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view
+          *ngSwitchCase="CalendarView.Week"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+          [snapDraggedEvents]="false"
+          (eventTimesChanged)="eventDropped($event)"
+          dayStartHour = 8
+          [headerTemplate] = "defaultTemplate1">
+        
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view
+          *ngSwitchCase="CalendarView.Day"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+          [snapDraggedEvents]="false"
+          (eventTimesChanged)="eventDropped($event)"
+        >
+        </mwl-calendar-day-view>
+      </div>
+    </div>
+
+    <div class="col-md-3 sidebar sticky-top">
+        <div
+          class="card"
+          mwlDroppable
+          (drop)="externalDrop($event.dropData.event)"
+          dragOverClass="drag-over"
+        >
+          <div class="card-body">
+            <p *ngIf="todos.length === 0"><em>No tasks added</em></p>
+            <ul>
+              <li
+                *ngFor="let event of todos"
+                mwlDraggable
+                [dropData]="{event: event}"
+                dragActiveClass="drag-active"
+              >
+                <a href="javascript:;">
+                  {{ event.title }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+
+  <!-- dayStartHour = 8  -->
+
+  <!-- <a href="javascript:;" [style.color]="event.color.primary">
+      {{ event.title }}
+    </a> -->
+
+    

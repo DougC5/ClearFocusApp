@@ -1,12 +1,10 @@
 
-<form #EditToDoForm="ngForm" (submit)="onEditToDo(EditToDoForm)"
+<mat-spinner *ngIf="isLoading" ></mat-spinner>
+
+<form *ngIf="!isLoading" #EditToDoForm="ngForm" (submit)="onEditToDo(EditToDoForm)"
 class="m-2">
 
     <div class="input-group mb-3">
-        <!-- <div class="input-group-prepend">
-  
-          
-        </div> -->
   
         <mat-card>
 
@@ -15,7 +13,7 @@ class="m-2">
             type="text"
             name="editInput"  
             matInput
-            [ngModel]="todo?.title"
+            [(ngModel)]="todo.title"
             placeholder="Edit {{routeType}} Here..."
             ngModel>
           </mat-form-field>
@@ -29,27 +27,59 @@ class="m-2">
         <mat-list-item> {{todo?.project}} </mat-list-item>
     </mat-list>
 
-    <mat-form-field class="example-full-width">
-      <textarea 
+    <mat-form-field class="notesBox">
+      <textarea
+      class="notesText" 
       matInput
       type="text"
       name="editNotes" 
-      [ngModel]="todo?.notes"
+      [ngModel]="todo.notes"
       matTextareaAutosize 
       matAutosizeMinRows=3 
       matAutosizeMaxRows=5
       placeholder="Notes:"></textarea>
+      <div mat-dialog-actions align="end" class="notesIcon mb-2">
+      <button mat-raised-button (click)="openDialog()"> <mat-icon>flip_to_front</mat-icon> 
+      </button>
+      </div>
+    </mat-form-field>
+    
+  <!-- Parent Selector -->
+    <mat-form-field *ngIf="parentType != null" class="example-full-width">
+      <input 
+      type="text"
+      name="parentInput"
+      [(formControl)]="myControl"
+      placeholder="{{placeholder}}" 
+      aria-label="Assignee"
+      matInput 
+      [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option.title}}
+        </mat-option>
+        
+      </mat-autocomplete>
+  
+      
     </mat-form-field>
 
-    <app-parent-selector></app-parent-selector>
-    
+      <!-- Submit Button -->
+
     <button mat-raised-button
           class="btn btn-outline-secondary" 
-          type="submit" 
-          id="addToDo">Update</button>
+          type="submit"
+          id="addToDo"
+          (click)="onCloseEditPane()">Update</button>
+
+    
 
   </form>
 
+  
+
+  <!-- [formControl]="myControl"  -->
+  <!-- [ngModel]="todo?.parent" -->
   
 
 
