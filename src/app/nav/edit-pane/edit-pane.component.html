@@ -27,8 +27,9 @@ class="m-2">
         <mat-list-item> {{todo?.project}} </mat-list-item>
     </mat-list>
 
-    <mat-form-field class="example-full-width">
-      <textarea 
+    <mat-form-field class="notesBox">
+      <textarea
+      class="notesText" 
       matInput
       type="text"
       name="editNotes" 
@@ -37,7 +38,7 @@ class="m-2">
       matAutosizeMinRows=3 
       matAutosizeMaxRows=5
       placeholder="Notes:"></textarea>
-      <div mat-dialog-actions align="end">
+      <div mat-dialog-actions align="end" class="notesIcon mb-2">
       <button mat-raised-button (click)="openDialog()"> <mat-icon>flip_to_front</mat-icon> 
       </button>
       </div>
@@ -70,6 +71,8 @@ class="m-2">
           type="submit"
           id="addToDo"
           (click)="onCloseEditPane()">Update</button>
+
+    
 
   </form>
 

@@ -4,11 +4,13 @@ const Todo = require('../models/todo');
 const router = express.Router();
 
 router.post('', (req, res, next)=>{
+    console.log('*******is Focus: ', req.body.isFocus)
     const todo = new Todo({
         title: req.body.title,
         type: req.body.type,
         project: req.body.project,
         isScheduledCal: req.body.isScheduledCal,
+        isFocus: req.body.isFocus
     });
     console.log(todo);
     todo.save().then(createdTodo =>{
@@ -45,7 +47,8 @@ router.patch('/:id', (req, res, next)=>{
         _id: req.body._id,
         isScheduledCal: req.body.isScheduledCal,
         start: req.body.start,
-        end: req.body.end
+        end: req.body.end,
+        isFocus: req.body.isFocus 
     });
     Todo.updateOne({_id: req.params.id}, todo).then(result => {
         console.log(result);

@@ -13,4 +13,5 @@ export interface Todo {
     end?: Date;
     resizable?: object;
     actions?: [];
+    isFocus?: boolean;
 }

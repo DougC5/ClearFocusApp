@@ -8,7 +8,7 @@
 <!-- Position Column -->
 <ng-container matColumnDef="position" (click)="onDelete()">
   <th mat-header-cell class="completedButton" *matHeaderCellDef> </th>
-  <td mat-cell *matCellDef="let todos">
+  <td mat-cell class="cell" class="cell" *matCellDef="let todos">
     <mat-checkbox
     (click)="onDelete(todos._id)">
 
@@ -18,21 +18,51 @@
 <!-- Title Column -->
 <ng-container matColumnDef="name">
   <th mat-header-cell class="mainTask" *matHeaderCellDef> {{routeType}} </th>
-  <td mat-cell *matCellDef="let todos"> {{todos.title}} </td>
+  <td mat-cell class="cell" class="cell" *matCellDef="let todos">
+
+    <span *ngIf="todos.isFocus || 
+    getParentFocus(todos.parent) ||
+    getGPFocus(todos.parent) ||
+    getGGPFocus(todos.parent) ||
+    getGGGPFocus(todos.parent) ||
+    getGGGGPFocus(todos.parent);
+    else notFocus" 
+    matBadge="!" 
+    matBadgeColor="accent" 
+    matBadgeOverlap="false"
+    matBadgeSize="medium">{{todos.title}} </span> 
+
+    <ng-template #notFocus>
+        {{todos.title}}
+    </ng-template>
+
+  </td>
 </ng-container>
+
+<!-- Tasks Column -->
+<ng-container *ngIf="routeType != 'Todo'" matColumnDef="tasks">
+  <th mat-header-cell class="mainParent" *matHeaderCellDef># of {{childType}} </th>
+  <td mat-cell class="cell" *matCellDef="let todos">
+
+     <mat-chip-list *ngIf="childArray.length > 0">
+       <mat-chip>{{childArray | count: todos._id}}</mat-chip>
+     </mat-chip-list>
+
+  </td>
+  
+</ng-container> 
 
 <!-- Parent Column -->
 <ng-container matColumnDef="parent">
     <th mat-header-cell class="mainParent" *matHeaderCellDef> {{parentType}} </th>
-    <td mat-cell *matCellDef="let todos"> {{getParentName(todos.parent)}} </td>
+    <td mat-cell class="cell" *matCellDef="let todos"> {{getParentName(todos.parent)}} </td>
   </ng-container> 
 
-  
 
   <!-- Edit Button Column -->
 <ng-container matColumnDef="edit">
     <th mat-header-cell class="editButton" *matHeaderCellDef> Edit </th>
-    <td mat-cell *matCellDef="let todos">
+    <td mat-cell class="cell" *matCellDef="let todos">
         <button mat-button color="primary" 
         (click)="toggleEdit(todos._id)" 
         [routerLink]="[{outlets: {sideEdit: ['edit', todos._id]}}]">
@@ -49,7 +79,7 @@
 </div> -->
 
 <ng-container matColumnDef="expandedDetail">
-  <td mat-cell *matCellDef="let todos" [attr.colspan]="displayedColumns.length">
+  <td mat-cell class="expandedCell" *matCellDef="let todos" [attr.colspan]="displayedColumns.length">
     <div class="example-element-detail"
          [@detailExpand]="todos == expandedElement ? 'expanded' : 'collapsed'">
          <div class="example-element-diagram">
@@ -63,9 +93,10 @@
         </div>
         <div *ngIf="routeType !== 'ToDo'" class="example-element-diagram">
           <div class="attachedParent">Attached {{childType}}: </div>
-          <div *ngFor="let item of childArray" class="example-element-position">
+          <div #myVar *ngFor="let item of childArray; index as i" 
+          class="example-element-position">
             <div class="attachedChildren" *ngIf="todos._id === item.parent" >
-             - {{item.title}}
+            - {{item.title}}
             </div>
           </div>
           

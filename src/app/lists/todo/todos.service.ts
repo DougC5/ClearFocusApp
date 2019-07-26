@@ -114,10 +114,11 @@ export class TodoService {
             isScheduledCal: false,
             draggable: true,
             end: null,
+            isFocus: false,
             resizable: {
                 beforeStart: true,
                 afterEnd: true
-              }
+              },
         };
         this.http.post<{message: string, todoId: string}>('http://localhost:3000/api/todos/', todo)
         .subscribe((responseData) => {
@@ -140,7 +141,6 @@ export class TodoService {
             isScheduledCal: isScheduledCal,
             color: null,
             start: start,
-
             draggable: true};
         this.http.put('http://localhost:3000/api/todos/' + id, todo)
         .subscribe(response => {
@@ -160,6 +160,26 @@ export class TodoService {
             isScheduledCal: isScheduledCal,
             start: start,
             end: end
+            };
+        this.http.patch('http://localhost:3000/api/todos/' + id, todo)
+        .subscribe(response => {
+            const updatedTodos = [...this.todos];
+            const oldTodoIndex = updatedTodos.findIndex(t => t._id === todo._id);
+            updatedTodos[oldTodoIndex] = todo;
+            this.todos = updatedTodos;
+            this.todosUpdated.next([...this.todos]);
+        });
+    }
+
+    updateFocus(id: string, title: string, type: string, start: Date, isScheduledCal: boolean, isFocus: boolean ) {
+        const todo: Todo = {
+            _id: id,
+            title: title,
+            type: type,
+            start: start,
+            isScheduledCal: isScheduledCal,
+            isFocus: isFocus
+    
             };
         this.http.patch('http://localhost:3000/api/todos/' + id, todo)
         .subscribe(response => {

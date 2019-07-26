@@ -1,12 +1,11 @@
 import { Observable, Subscription } from 'rxjs';
-import { NgForm, FormControl } from '@angular/forms';
+import { NgForm, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TodoService } from './../../lists/todo/todos.service';
 import { Todo } from './../../lists/todo/todo.model';
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { startWith, map } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { AutofillMonitor } from '@angular/cdk/text-field';
 
 
 @Component({
@@ -25,6 +24,7 @@ export class EditPaneComponent implements OnInit, OnDestroy {
   placeholder: string;
   isloading = false;
   newNotes: string;
+  file: File;
 
 
   myControl = new FormControl();
@@ -34,6 +34,7 @@ export class EditPaneComponent implements OnInit, OnDestroy {
   parentId: string;
   placeHolderObject: Todo;
   private todoSub: Subscription;
+
 
   onEditToDo(form: NgForm) {
 
@@ -86,6 +87,8 @@ export class EditPaneComponent implements OnInit, OnDestroy {
         this.todo.start
         );
 
+    this.todo.notes = form.value.editNotes;
+
         // Update placeholder after new information has been sent to the server
     if (this.myControl.value === null || this.myControl.value === '') {
           this.myControl.reset({ value: '', disabled: false });
@@ -103,22 +106,30 @@ export class EditPaneComponent implements OnInit, OnDestroy {
 
   }
 
-  onCloseEditPane(){
-    this.todoService.close()
+  // Close the Side Panel
+  onCloseEditPane() {
+    this.todoService.close();
   }
 
   // Notes Dialog Box "Open" function
   openDialog() {
     const dialogRef = this.dialog.open(EditPaneNotesDialog, {
-      height: '400px',
+      height: '500px',
       width: '600px',
-      data: {notes: this.todo.notes, title: this.todo.title}
+      data: {notes: this.todo.notes, title: this.todo.title, file: this.file}
     });
 
     // Notes Dialog Box "On Close" function
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.newNotes = result;
+      console.log('The dialog was closed', result);
+
+      if (result === undefined) {
+        return;
+
+      } else {
+      this.newNotes = result.notes;
+      this.file = result.file;
+      this.todo.notes = this.newNotes;
       console.log('this.newNotes: ', this.newNotes);
       this.todoService.updateTodo(
         this.todoId,
@@ -129,9 +140,16 @@ export class EditPaneComponent implements OnInit, OnDestroy {
         this.todo.isScheduledCal,
         this.todo.start
         );
+      }
     });
 
     // this.todo = this.todoService.getSingleTodo(this.todoId);
+  }
+
+  
+
+  notesUpdated() {
+    this.todo = this.todoService.getSingleTodo(this.todoId);
   }
 
   constructor(public todoService: TodoService,
@@ -140,6 +158,8 @@ export class EditPaneComponent implements OnInit, OnDestroy {
 
    ngOnInit() {
     console.log('***IM INSIDE THE EDIT PANE ONINIT');
+
+    
 
     this.isloading = true;
 
@@ -163,19 +183,6 @@ export class EditPaneComponent implements OnInit, OnDestroy {
     });
 
     this.parentList = this.todoService.getParentTodosArray();
-
-    // this.todoSub = this.todoService.getTodoUpdateListener()
-    // .subscribe((todos: Todo[]) => {
-    //   this.todo = todos.find(a => a._id === this.todoId);
-    //   this.todoP = this.todoService.getSingleTodo(this.todo.parent);
-    //   this.placeHolderObject = this.todoP;
-
-    //   if (this.todoP._id === undefined) {
-    //       this.placeholder = 'Assign ' + this.parentType;
-    //     } else {
-    //       this.placeholder = this.todoP.title;
-    //     }
-    //   });
 
     console.log('this.todo: ', this.todo);
 
@@ -217,14 +224,40 @@ ngOnDestroy(): void {
   templateUrl: 'edit-pane-notes-dialog.html',
   styleUrls: ['./edit-pane.component.css']
 })
-export class EditPaneNotesDialog {
+export class EditPaneNotesDialog implements OnInit {
+
+  form: FormGroup;
+  filePreview: string;
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onFileAdded(event: Event) {
+    const newFile = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({file: newFile});
+    this.form.get('file').updateValueAndValidity();
+    console.log('this.form: ', this.form);
+    console.log('new file: ', newFile);
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.filePreview = reader.result as string;
+    };
+    reader.readAsDataURL(newFile);
+
+  }
 
   constructor(
     public dialogRef: MatDialogRef<EditPaneNotesDialog>,
     @Inject(MAT_DIALOG_DATA) public data: EditPaneComponent) {}
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+    ngOnInit(){
+
+      this.form = new FormGroup({
+        file: new FormControl(null)
+      });
+    }
+
+  
 
 }

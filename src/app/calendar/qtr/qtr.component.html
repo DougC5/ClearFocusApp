@@ -1,3 +1,29 @@
-<p>
-  qtr works!
-</p>
+<div class="example-container">
+    <h2>Quarter Focus</h2>
+  
+    <div
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="focusGoals"
+      [cdkDropListConnectedTo]="[doneList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of focusGoals" cdkDrag>{{item.title}}</div>
+    </div>
+  </div>
+  
+  <div class="example-container">
+    <h2>List</h2>
+  
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="nonFocus"
+      [cdkDropListConnectedTo]="[todoList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of nonFocus" cdkDrag>{{item.title}}</div>
+    </div>
+  </div>
+  
+  

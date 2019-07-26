@@ -1,3 +1,4 @@
+import { CountPipe } from './count.pipe';
 import { AppRoutingModule } from './app.routing.modules';
 import { HeaderComponent } from './nav/header/header.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,7 +21,9 @@ import { MatInputModule,
   MatTableModule,
   MatCheckboxModule,
   MatProgressSpinnerModule,
-  MatDialogModule,} from '@angular/material';
+  MatDialogModule,
+  MatChipsModule,
+  MatBadgeModule,} from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -39,6 +42,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { DragAndDropModule } from 'angular-draggable-droppable';
 import { CalendarHeaderComponent } from './calendar/cal-utils/calendar-header.component';
 import { CommonModule } from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -54,7 +58,8 @@ import { CommonModule } from '@angular/common';
     SmallBarComponent,
     EditPaneComponent,
     CalendarHeaderComponent,
-    EditPaneNotesDialog
+    EditPaneNotesDialog,
+    CountPipe
   ],
 
   entryComponents: [EditPaneNotesDialog],
@@ -83,6 +88,8 @@ import { CommonModule } from '@angular/common';
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatChipsModule,
+    MatBadgeModule,
     [
       CalendarModule.forRoot({
         provide: DateAdapter,
@@ -92,6 +99,7 @@ import { CommonModule } from '@angular/common';
     DragAndDropModule,
     CalendarModule,
     CommonModule,
+    DragDropModule
 
 
   ],

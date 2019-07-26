@@ -93,4 +93,19 @@ table {
     border: 2px solid black;
     line-height: 1.5rem
   }
+
+  .cell {
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.expandedCell{
+  /* padding-top: 15px; */
+  /* padding-bottom: 10px; */
+}
+
+.mat-badge {
+  padding-right: 10px;
+}
+
   
