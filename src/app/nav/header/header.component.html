@@ -1,5 +1,22 @@
-<mat-toolbar>
-    <button mat-button (click)="goBack()"> <mat-icon>arrow_back_ios</mat-icon> </button>
-    <span>ClearFocusApp</span>
+<mat-toolbar d-flex bd-highlight>
+
+    <div class="mr-auto p-2 bd-highlight">
+        <button mat-button (click)="goBack()"> <mat-icon>arrow_back_ios</mat-icon> </button>
+        <span>ClearFocusApp</span>
+    </div>
+
+
+        <div *ngIf="!userIsAuthenticated" class="p-2 bd-highlight m-0">
+            <button mat-raised-button color="primary" routerLink="/login" routerLinkActive="router-link-active" >Login</button>
+        </div>
+
+        <div *ngIf="!userIsAuthenticated" class="p-2 bd-highlight m-0">
+            <button mat-raised-button color="primary" routerLink="/signup" routerLinkActive="router-link-active" >Signup</button>
+        </div>
+
+        <div *ngIf="userIsAuthenticated" class="p-2 bd-highlight m-0">
+            <button mat-raised-button (click)="onLogout()" >Logout</button>
+        </div>
+
 </mat-toolbar>
 

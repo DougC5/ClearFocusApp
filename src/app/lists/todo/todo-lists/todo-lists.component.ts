@@ -27,7 +27,7 @@ export class TodoListsComponent implements OnInit, OnDestroy {
   parent: Todo;
   private todoSub: Subscription;
   routeType: string;
-  displayedColumns = ['position', 'name', "tasks", 'parent', 'edit'];
+  displayedColumns = ['position', 'name', 'tasks', 'parent', 'edit'];
   expandedElement: Todo | null;
   parentTodo: string;
   editID: string;
@@ -78,55 +78,34 @@ export class TodoListsComponent implements OnInit, OnDestroy {
     return this.parent.title;
   }
 
-  getParentFocus(id){
+  // Gets if the item is a focus item or not
+  isFocus(id) {
     this.parent = this.todoService.getSingleTodo(id);
-    return this.parent.isFocus;
-  }
-
-  getGPFocus(id){
-    this.parent = this.todoService.getSingleTodo(id);
+    if (this.parent.isFocus) {
+      return true;
+    }
     const gpId = this.parent.parent;
     const gp = this.todoService.getSingleTodo(gpId);
-    return gp.isFocus;
-  }
-
-  getGGPFocus(id){
-    this.parent = this.todoService.getSingleTodo(id);
-    const gpId = this.parent.parent;
-    const gp = this.todoService.getSingleTodo(gpId);
+    if (gp.isFocus) {
+      return true;
+    }
     const ggpId =  gp.parent;
     const ggp = this.todoService.getSingleTodo(ggpId);
-    return ggp.isFocus;
-  }
-
-  getGGGPFocus(id){
-    this.parent = this.todoService.getSingleTodo(id);
-    const gpId = this.parent.parent;
-    const gp = this.todoService.getSingleTodo(gpId);
-    const ggpId =  gp.parent;
-    const ggp = this.todoService.getSingleTodo(ggpId);
+    if (ggp.isFocus) {
+      return true;
+    }
     const gggpId = ggp.parent;
     const gggp = this.todoService.getSingleTodo(gggpId);
-    return gggp.isFocus;
-  }
-
-  getGGGGPFocus(id){
-    this.parent = this.todoService.getSingleTodo(id);
-    const gpId = this.parent.parent;
-    const gp = this.todoService.getSingleTodo(gpId);
-    const ggpId =  gp.parent;
-    const ggp = this.todoService.getSingleTodo(ggpId);
-    console.log("ggp.title", ggp.title);
-    const gggpId = ggp.parent;
-    const gggp = this.todoService.getSingleTodo(gggpId);
-    console.log("gggp.title", gggp.title);
+    if (gggp.isFocus) {
+      return true;
+    }
     const ggggpId = gggp.parent;
     const ggggp = this.todoService.getSingleTodo(ggggpId);
-    console.log("ggggp.title", ggggp.title);
-    return ggggp.isFocus;
+    if (ggggp.isFocus) {
+      return true;
+    }
+    return false;
   }
-
-  
 
   // Delete single task
   onDelete(todoId: string) {

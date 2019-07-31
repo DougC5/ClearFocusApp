@@ -1,3 +1,5 @@
+import { AuthInterceptor } from './auth/auth-interceptor';
+import { SignupComponent } from './auth/signup/signup.component';
 import { CountPipe } from './count.pipe';
 import { AppRoutingModule } from './app.routing.modules';
 import { HeaderComponent } from './nav/header/header.component';
@@ -30,8 +32,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HttpClientModule } from '@angular/common/http';
-import { TwoWeekComponent } from './calendar/two-week/two-week.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { QtrComponent } from './calendar/qtr/qtr.component';
 import { SmallBarComponent } from './nav/small-bar/small-bar.component';
 import { EditPaneComponent, EditPaneNotesDialog } from './nav/edit-pane/edit-pane.component';
@@ -43,6 +44,8 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
 import { CalendarHeaderComponent } from './calendar/cal-utils/calendar-header.component';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { LoginComponent } from './auth/login/login.component';
+import { ErrorInterceptor } from './error-interceptor';
 
 
 @NgModule({
@@ -53,13 +56,14 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     NavbarComponent,
     HeaderComponent,
     TodoListsComponent,
-    TwoWeekComponent,
     QtrComponent,
     SmallBarComponent,
     EditPaneComponent,
     CalendarHeaderComponent,
     EditPaneNotesDialog,
-    CountPipe
+    CountPipe,
+    LoginComponent,
+    SignupComponent
   ],
 
   entryComponents: [EditPaneNotesDialog],
@@ -105,7 +109,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   ],
 
   exports: [ EditPaneNotesDialog ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

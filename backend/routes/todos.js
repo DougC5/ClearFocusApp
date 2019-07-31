@@ -1,11 +1,29 @@
 const express = require("express");
 const Todo = require('../models/todo');
+const multer = require("multer");
 
 const router = express.Router();
+const checkAuth = require("../middleware/check-auth");
 
-router.post('', (req, res, next)=>{
-    console.log('*******is Focus: ', req.body.isFocus)
+
+    // Multer for File Upload
+// const MIME_TYPE_MAP = {
+
+// };
+    
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, "backend/files");
+//     },
+//     filename: (req, file, cb) => {
+//         const name = file.originalname.toLowerCase().split(' ').join('-');
+//     }
+// });
+
+router.post('', checkAuth, (req, res, next)=>{
+    console.log('*******is Focus: ', req.body.isFocus);
     const todo = new Todo({
+        user: req.userData.userId,
         title: req.body.title,
         type: req.body.type,
         project: req.body.project,
@@ -16,13 +34,14 @@ router.post('', (req, res, next)=>{
     todo.save().then(createdTodo =>{
         res.status(201).json({
             message: 'todo added successfully!!!',
-            todoId: createdTodo._id
+            todoId: createdTodo._id,
+            user: createdTodo.user
         });
     });
     
 });
 
-router.put('/:id', (req, res, next)=>{
+router.put('/:id', checkAuth, (req, res, next)=>{
     const todo = new Todo({
         _id: req.body._id,
         title: req.body.title,
@@ -36,13 +55,17 @@ router.put('/:id', (req, res, next)=>{
         draggable: req.body.draggable
 
     });
-    Todo.updateOne({_id: req.params.id}, todo).then(result => {
+    Todo.updateOne({_id: req.params.id, user: req.userData.userId}, todo).then(result => {
         console.log(result);
-        res.status(200).json({message: 'todo updated successfully!!!'})
-    })
+        if (result.nModified > 0){
+            res.status(200).json({message: 'todo updated successfully!!!'});
+        } else {
+            res.status(401).json({message: 'Not Authorized'});
+        }
+    });
 });
 
-router.patch('/:id', (req, res, next)=>{
+router.patch('/:id', checkAuth, (req, res, next)=>{
     const todo = new Todo({
         _id: req.body._id,
         isScheduledCal: req.body.isScheduledCal,
@@ -50,26 +73,31 @@ router.patch('/:id', (req, res, next)=>{
         end: req.body.end,
         isFocus: req.body.isFocus 
     });
-    Todo.updateOne({_id: req.params.id}, todo).then(result => {
+    Todo.updateOne({_id: req.params.id, user: req.userData.userId}, todo).then(result => {
         console.log(result);
-        res.status(200).json({message: 'todo Calendar Patched successfully!!!'});
+        if (result.nModified > 0){
+            res.status(200).json({message: 'todo Calendar Patched successfully!!!'});
+        } else {
+            res.status(401).json({message: 'Not Authorized'});
+        }
     });
 });
 
-router.get('', (req, res, next)=>{
-    Todo.find()
+router.get('', checkAuth, (req, res, next)=>{
+    Todo.find({user: req.userData.userId})
     .then(documents =>{
-        console.log(documents);
+        console.log('Docs', documents);
         res.status(200).json({
             message: 'Todos fetched successfully',
-            todos: documents 
+            todos: documents,
+            
         });
     });
 });
 
-router.delete('/:id', (req, res, next) =>{
+router.delete('/:id', checkAuth, (req, res, next) =>{
  console.log(req.params.id);
- Todo.deleteOne({_id: req.params.id})
+ Todo.deleteOne({_id: req.params.id, user: req.userData.userId})
 .then(
     console.log( req.params.id + ' ***Deleted***')
 );
@@ -77,3 +105,4 @@ router.delete('/:id', (req, res, next) =>{
 });
 
 module.exports = router;
+

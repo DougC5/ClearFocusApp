@@ -3,9 +3,7 @@ import { Todo } from './todo.model';
 import { Injectable } from '@angular/core';
 import { Subject} from "rxjs";
 import { MatSidenav } from '@angular/material';
-import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
-
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Injectable({providedIn: 'root'})
 export class TodoService {
@@ -21,7 +19,7 @@ export class TodoService {
             Goals: 'Vision',
             Vision: 'Purpose',
             Purpose: null,
-        }
+        };
 
     child = {
             ToDo: null,
@@ -29,9 +27,9 @@ export class TodoService {
             Goals: 'Projects',
             Vision: 'Goals',
             Purpose: 'Vision',
-        }
+        };
 
-    constructor (private http: HttpClient) {    }
+    constructor(private http: HttpClient, public authService: AuthService) { }
 
     public setType(type: string) {
         this.type = type;
@@ -103,6 +101,7 @@ export class TodoService {
     addTodo(title: string, type: string) {
         const todo: Todo = {
             _id: null,
+            user: null,
             title: title,
             type: type,
             notes: null,

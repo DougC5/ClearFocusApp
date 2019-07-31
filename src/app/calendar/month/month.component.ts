@@ -28,6 +28,8 @@ interface CalendarEvent<MetaType = any> {
   start: Date;
   end?: Date;
   isScheduledCal?: boolean;
+  isFocus?: boolean;
+  parent?: string;
   title: string;
   type?: string;
   color?: EventColor;
@@ -104,6 +106,41 @@ export class MonthComponent implements OnInit {
       this.todoService.updateCal(event._id, event.title, event.type, event.isScheduledCal, event.start, event.end);
       console.log('todos : ', this.todos);
     }
+  }
+
+  // Getting the Parent Tasks' name
+  getParentName(id){
+    this.parent = this.todoService.getSingleTodo(id)
+    return this.parent.title;
+  }
+
+  // Gets if the item is a focus item or not
+  isFocus(id) {
+    this.parent = this.todoService.getSingleTodo(id);
+    if (this.parent.isFocus) {
+      return true;
+    }
+    const gpId = this.parent.parent;
+    const gp = this.todoService.getSingleTodo(gpId);
+    if (gp.isFocus) {
+      return true;
+    }
+    const ggpId =  gp.parent;
+    const ggp = this.todoService.getSingleTodo(ggpId);
+    if (ggp.isFocus) {
+      return true;
+    }
+    const gggpId = ggp.parent;
+    const gggp = this.todoService.getSingleTodo(gggpId);
+    if (gggp.isFocus) {
+      return true;
+    }
+    const ggggpId = gggp.parent;
+    const ggggp = this.todoService.getSingleTodo(ggggpId);
+    if (ggggp.isFocus) {
+      return true;
+    }
+    return false;
   }
 
   async ngOnInit() {

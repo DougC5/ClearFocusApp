@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+  }
+
+  mat-spinner {
+      margin: auto;
+  }
+
+  mat-form-field,
+  textarea {
+      width: 100%;
+  }
+  
+  .container > * {
+    width: 80%;
+    margin: auto;
+    padding: 20px 70px;
+  }
+
+  mat-card-title{
+    text-align: center;
+  }
+  button {
+    width: 80%;
+    display: block;
+    margin: auto;
+  }
+  

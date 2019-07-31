@@ -9,7 +9,7 @@
 
     <mat-drawer-container class="mainContainer" hasBackdrop="false">
 
-        <mat-drawer #mainNav class="navbar" opened mode="side" *ngIf="nav"> 
+        <mat-drawer #mainNav disabled="true" class="navbar" opened mode="side" *ngIf="nav"> 
             <app-navbar></app-navbar> 
             <mat-card-actions>
                 <button mat-raised-button (click)="navToggle()"> <mat-icon>arrow_back</mat-icon> </button>
@@ -25,7 +25,6 @@
 
         <mat-drawer 
         #editDrawer 
-        hasBackdrop="true"
         class="editDrawer" 
         name="editDrawer" 
         mode="side" 

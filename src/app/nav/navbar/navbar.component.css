@@ -5,12 +5,12 @@ button{
 }
 
 .mat-list-item{
-    color: #fff !important;
-    padding-right: 0px !important;
+    color: #fff;
+    padding-right: 0px;
 }
 
 .active-list-item {
-    background: #555 !important; /* Note: You could also use a custom theme */
+    background: #555; /* Note: You could also use a custom theme */
   }
 
   .mat-divider{

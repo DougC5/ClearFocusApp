@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/auth/auth.service';
 import { TodoService } from './lists/todo/todos.service';
 import { Component, OnInit, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { MatSidenav } from '@angular/material';
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit{
   //   }
   // }
 
-  constructor(public todoService: TodoService, private eRef: ElementRef){ }
+  constructor(public todoService: TodoService, private eRef: ElementRef, private AuthService: AuthService){ }
 
   nav = true;
   editPane: boolean;
@@ -48,8 +49,10 @@ export class AppComponent implements OnInit{
     // this.todoService.toggleEditPane(this.editPane);
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.todoService.setSidenav(this.sidenav);
+    this.AuthService.autoAuthUser();
+
     };
 
 }

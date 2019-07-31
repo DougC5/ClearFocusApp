@@ -1,55 +1,71 @@
-<nav class="lists-scroll" color="primary">
-  <div class="my-2">
-      <button mat-raised-button color="primary"
-       routerLink="/twoWeek" 
-       (click)="onCloseEditPane()">
-       2 Week</button>
+<nav color="primary">
+  <div class="my-2 d-flex justify-content-around">
   
       <button mat-raised-button color="primary" 
-      routerLink="/month" 
+      routerLink="/month"
+      [disabled]="!userIsAuthenticated"
       (click)="onCloseEditPane()">
       Monthly</button>
 
       <button mat-raised-button color="primary" 
-      routerLink="/qtr" 
+      routerLink="/qtr"
+      [disabled]="!userIsAuthenticated"
       (click)="onCloseEditPane()">
-      QTR</button>
+      Focus</button>
   </div>
   
   <mat-nav-list class="linkList">
-      <a mat-list-item routerLink="/ToDo" 
+      <a mat-list-item 
+      [style.pointer-events]="!userIsAuthenticated ? 'none' : 'auto'" 
+      [style.color]="!userIsAuthenticated ? 'gray' : ''"
+      routerLink="/ToDo" 
       routerLinkActive="active-list-item"
       (click)="onCloseEditPane()"> 
       <mat-icon>create</mat-icon> Tasks </a>
 
       <mat-divider></mat-divider>
 
-      <a mat-list-item routerLink="/Projects" 
+      <a mat-list-item 
+      [style.pointer-events]="!userIsAuthenticated ? 'none' : 'auto'" 
+      [style.color]="!userIsAuthenticated ? 'gray' : ''"
+      routerLink="/Projects" 
       routerLinkActive="active-list-item"
       (click)="onCloseEditPane()"> 
       <mat-icon>build</mat-icon>Projects </a>
 
       <mat-divider></mat-divider>
 
-      <a mat-list-item routerLink="/Goals"
+      <a mat-list-item 
+      [style.pointer-events]="!userIsAuthenticated ? 'none' : 'auto'" 
+      [style.color]="!userIsAuthenticated ? 'gray' : ''"
+      routerLink="/Goals"
       routerLinkActive="active-list-item"
       (click)="onCloseEditPane()">
       <mat-icon>domain</mat-icon> 1 - 2 yr Goals </a>
 
-      <a mat-list-item routerLink="/Vision" 
+      <a mat-list-item 
+      [style.pointer-events]="!userIsAuthenticated ? 'none' : 'auto'" 
+      [style.color]="!userIsAuthenticated ? 'gray' : ''"
+      routerLink="/Vision" 
       routerLinkActive="active-list-item"
       (click)="onCloseEditPane()">
       <mat-icon>landscape</mat-icon
         > 3 - 5 yr Vision </a>
 
-      <a mat-list-item routerLink="/Purpose" 
+      <a mat-list-item 
+      [style.pointer-events]="!userIsAuthenticated ? 'none' : 'auto'" 
+      [style.color]="!userIsAuthenticated ? 'gray' : ''"
+      routerLink="/Purpose" 
       routerLinkActive="active-list-item"
       (click)="onCloseEditPane()">
-      <mat-icon>cloud</mat-icon> Purpose and Principles </a>
+      <mat-icon>cloud</mat-icon> Purpose </a>
 
       <mat-divider></mat-divider>
 
-      <a mat-list-item routerLink="/Reference"
+      <a mat-list-item 
+      [style.pointer-events]="!userIsAuthenticated ? 'none' : 'auto'" 
+      [style.color]="!userIsAuthenticated ? 'gray' : ''"
+      routerLink="/Reference"
       (click)="onCloseEditPane()"> 
         <mat-icon>folder_open</mat-icon> Reference </a>
 

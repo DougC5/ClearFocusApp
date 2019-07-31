@@ -82,27 +82,40 @@
       </div>
     </div>
 
-    <div class="col-md-3 sidebar sticky-top">
+    <div class="col-md-3 sidebar">
         <div
-          class="card"
+          class="card position-fixed"
           mwlDroppable
           (drop)="externalDrop($event.dropData.event)"
           dragOverClass="drag-over"
         >
           <div class="card-body">
             <p *ngIf="todos.length === 0"><em>No tasks added</em></p>
-            <ul>
-              <li
+            <mat-list class="pl-0">
+              <mat-list-item
                 *ngFor="let event of todos"
                 mwlDraggable
                 [dropData]="{event: event}"
                 dragActiveClass="drag-active"
+                class="list"
               >
-                <a href="javascript:;">
-                  {{ event.title }}
-                </a>
-              </li>
-            </ul>
+                <div *ngIf="event.isFocus || 
+                isFocus(event.parent);
+                else notFocus" 
+                href="javascript:;"
+                matBadge="!" 
+                matBadgeColor="accent" 
+                matBadgeOverlap="false"
+                matBadgeSize="small" >
+                {{ event.title }}
+                </div>
+
+                <ng-template href="javascript:;" #notFocus>
+                    {{event.title}}
+                </ng-template>
+
+              </mat-list-item>
+            </mat-list>
           </div>
         </div>
       </div>
@@ -111,10 +124,5 @@
     </div>
 
 
-  <!-- dayStartHour = 8  -->
-
-  <!-- <a href="javascript:;" [style.color]="event.color.primary">
-      {{ event.title }}
-    </a> -->
 
     
