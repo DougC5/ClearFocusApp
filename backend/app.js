@@ -11,7 +11,7 @@ const app = express();
 
 // mongodb+srv://RWuser:4am5BT89G4NoNU@cluster0-2yhie.mongodb.net/clearfocus?retryWrites=true
 
-mongoose.connect("mongodb+srv://CFAuser:IUPrXMgPSOZofFrA@cluster0-io0te.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true })
+mongoose.connect("mongodb+srv://CFAuser:" + process.env.MONGO_ATLAS_PW + "@cluster0-io0te.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true })
 .then(() => {
     console.log('connected to the database!!!');
 })

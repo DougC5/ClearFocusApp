@@ -37,11 +37,11 @@
 
 <!-- Tasks Column -->
 <ng-container *ngIf="routeType != 'Todo'" matColumnDef="tasks">
-  <th mat-header-cell class="mainParent" *matHeaderCellDef># of {{childType}} </th>
+  <th mat-header-cell class="numOf" *matHeaderCellDef># of {{childType}} </th>
   <td mat-cell class="cell" *matCellDef="let todos">
 
      <mat-chip-list *ngIf="childArray.length > 0">
-       <mat-chip>{{childArray | count: todos._id}}</mat-chip>
+       <mat-chip class="numOfCell">{{childArray | count: todos._id}}</mat-chip>
      </mat-chip-list>
 
   </td>
@@ -51,7 +51,7 @@
 <!-- Parent Column -->
 <ng-container matColumnDef="parent">
     <th mat-header-cell class="mainParent" *matHeaderCellDef> {{parentType}} </th>
-    <td mat-cell class="cell" *matCellDef="let todos"> {{getParentName(todos.parent)}} </td>
+    <td mat-cell class="cell parentCell" *matCellDef="let todos"> {{getParentName(todos.parent)}} </td>
   </ng-container> 
 
 

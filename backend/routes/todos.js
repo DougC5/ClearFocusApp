@@ -37,6 +37,11 @@ router.post('', checkAuth, (req, res, next)=>{
             todoId: createdTodo._id,
             user: createdTodo.user
         });
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: " Creating a post failed"
+        });
     });
     
 });
@@ -57,11 +62,16 @@ router.put('/:id', checkAuth, (req, res, next)=>{
     });
     Todo.updateOne({_id: req.params.id, user: req.userData.userId}, todo).then(result => {
         console.log(result);
-        if (result.nModified > 0){
+        if (result.n > 0){
             res.status(200).json({message: 'todo updated successfully!!!'});
         } else {
             res.status(401).json({message: 'Not Authorized'});
         }
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Could Not Add Task"
+        });
     });
 });
 
@@ -75,11 +85,16 @@ router.patch('/:id', checkAuth, (req, res, next)=>{
     });
     Todo.updateOne({_id: req.params.id, user: req.userData.userId}, todo).then(result => {
         console.log(result);
-        if (result.nModified > 0){
+        if (result.n > 0){
             res.status(200).json({message: 'todo Calendar Patched successfully!!!'});
         } else {
             res.status(401).json({message: 'Not Authorized'});
         }
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Could not update Calendar"
+        });
     });
 });
 
@@ -92,16 +107,30 @@ router.get('', checkAuth, (req, res, next)=>{
             todos: documents,
             
         });
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Could not get Tasks"
+        });
     });
 });
 
 router.delete('/:id', checkAuth, (req, res, next) =>{
  console.log(req.params.id);
  Todo.deleteOne({_id: req.params.id, user: req.userData.userId})
-.then(
-    console.log( req.params.id + ' ***Deleted***')
-);
- res.status(200).json({message: 'post deleted'});
+.then(result => {
+    if (result.n > 0){
+        res.status(200).json({message: 'Task deleted'});
+    } else {
+        res.status(401).json({message: 'Not Authorized'});
+    } 
+})
+.catch(error => {
+    res.status(500).json({
+        message: "Could not get Tasks"
+    });
+});
+
 });
 
 module.exports = router;

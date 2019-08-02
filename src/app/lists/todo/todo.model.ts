@@ -4,8 +4,6 @@ export interface Todo {
     type: string;
     title: string;
     notes?: string;
-    project?: string;
-    children?: string;
     parent?: string;
     color?: any;
     start: Date;

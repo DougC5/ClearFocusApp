@@ -14,6 +14,7 @@ import { MonthComponent } from './calendar/month/month.component';
 import { NavbarComponent } from './nav/navbar/navbar.component';
 import { TodoListsComponent } from './lists/todo/todo-lists/todo-lists.component';
 
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule,
   MatCardModule,
@@ -46,6 +47,7 @@ import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LoginComponent } from './auth/login/login.component';
 import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from './error/error.component';
 
 
 @NgModule({
@@ -63,10 +65,11 @@ import { ErrorInterceptor } from './error-interceptor';
     EditPaneNotesDialog,
     CountPipe,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ErrorComponent
   ],
 
-  entryComponents: [EditPaneNotesDialog],
+  entryComponents: [EditPaneNotesDialog, ErrorComponent],
 
   imports: [
     BrowserModule,

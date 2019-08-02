@@ -1,7 +1,9 @@
+import { AuthService } from './../../auth/auth.service';
+import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { TodoService } from './todos.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Todo } from './todo.model';
 
 @Component({
@@ -15,6 +17,7 @@ export class TodoComponent implements OnInit, AfterViewInit {
   private mode = 'create';
   todo: Todo;
   routeType: string;
+  private authSubStatus: Subscription;
 
 
   // Adds task
@@ -30,7 +33,7 @@ export class TodoComponent implements OnInit, AfterViewInit {
     form.resetForm();
   }
 
-  constructor(public todoService: TodoService, public route: ActivatedRoute) {}
+  constructor(public todoService: TodoService, public route: ActivatedRoute, private authService: AuthService) {}
 
    ngOnInit() {
      // Get the current route type and save it in a variable
@@ -47,10 +50,9 @@ export class TodoComponent implements OnInit, AfterViewInit {
       }
     });
    }
-   
    ngAfterViewInit(){
     this.todoService.setType(this.routeType);
- 
+
    }
 
 }

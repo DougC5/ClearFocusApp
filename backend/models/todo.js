@@ -5,8 +5,6 @@ const todoSchema = mongoose.Schema({
     type: {type: String, required: true},
     title: {type: String, required: true},
     notes: {type: String},
-    project: {type: String, default: 'No PROJECT Defined'}, 
-    children: {type: Array, default: ['Child 1', 'Child 2']},
     parent: {type: String},
     color: {type: String},
     start: {type: Date},

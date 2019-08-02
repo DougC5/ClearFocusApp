@@ -21,7 +21,7 @@ router.post("/signup", (req, res, next) => {
     })
     .catch(err => {
         res.status(500).json({
-            error: err
+            message: "Invalid Authentication Credentials!"
         });
     });
 });
@@ -34,7 +34,7 @@ router.post("/login", (req, res, next) => {
     .then(user => {
         if(!user){
             return res.status(401).json({
-                message: "Auth failed"
+                message: "Invalid Authentication Credentials!"
             });
         }
         fetchedUser = user;
@@ -43,11 +43,11 @@ router.post("/login", (req, res, next) => {
     .then(result => {
         if (!result) {
             return res.status(401).json({
-                message: "auth Failed"
+                message: "Invalid Authentication Credentials!"
             });  
         }
 
-        const token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id}, "greedy_briber_and_chunky_composer_unveil_1991_polluted_toilets_and_2016_boiling_lambs_in_Perth", {expiresIn: "2h"}
+        const token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id}, process.env.JWT_KEY, {expiresIn: "2h"}
         );
         res.status(200).json({
             token: token,
@@ -56,7 +56,7 @@ router.post("/login", (req, res, next) => {
     })
     .catch(err => {
         return res.status(401).json({
-            message: "auth Failed"
+            message: "You are not Authenticated"
         });
     });
 });

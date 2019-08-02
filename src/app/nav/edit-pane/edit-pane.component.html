@@ -9,13 +9,13 @@ class="mainForm m-2">
         <mat-card>
 
           <mat-form-field>
-            <input 
+            <textarea 
             type="text"
             name="editInput"  
             matInput
             [(ngModel)]="todo.title"
             placeholder="Edit {{routeType}} Here..."
-            ngModel>
+            ngModel></textarea>
           </mat-form-field>
   
         </mat-card>
@@ -23,9 +23,7 @@ class="mainForm m-2">
       </div>
       </div>
 
-      <mat-list>
-        <mat-list-item> {{todo?.project}} </mat-list-item>
-    </mat-list>
+
 
     <mat-form-field class="notesBox">
       <textarea

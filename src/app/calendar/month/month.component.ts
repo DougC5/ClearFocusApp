@@ -149,7 +149,7 @@ export class MonthComponent implements OnInit {
     this.todos = await this.todoService.getTodosByType('ToDo');
     // Initalizing Date Objects
     this.todos.forEach(p => p.start = new Date(p.start));
-    this.todos.forEach(p => p.end = addMinutes(new Date(p.end), 30));
+    this.todos.forEach(p => p.end = addMinutes(new Date(p.end), 60));
     // Adding delete functionality to todos
     this.todos.forEach(p => p.actions = [
       {

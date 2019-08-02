@@ -249,7 +249,7 @@ export class EditPaneNotesDialog implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EditPaneNotesDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: EditPaneComponent) {}
+    @Inject(MAT_DIALOG_DATA) public data: {notes: string, title: string, file: File}) {}
 
     ngOnInit(){
 

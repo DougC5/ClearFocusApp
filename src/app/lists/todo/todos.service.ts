@@ -5,6 +5,10 @@ import { Subject} from "rxjs";
 import { MatSidenav } from '@angular/material';
 import { AuthService } from 'src/app/auth/auth.service';
 
+import { environment } from 'src/environments/environment';
+
+const BACKEND_URL = environment.apiUrl + '/todos/';
+
 @Injectable({providedIn: 'root'})
 export class TodoService {
     private todos: Todo[] = [];
@@ -73,7 +77,7 @@ export class TodoService {
     }
 
     getTodos() {
-        this.http.get<{message: string, todos: Todo[]}>('http://localhost:3000/api/todos')
+        this.http.get<{message: string, todos: Todo[]}>(BACKEND_URL)
         .subscribe((todoData) => {
          this.todos = todoData.todos;
          this.todosUpdated.next([...this.todos]);
@@ -105,8 +109,6 @@ export class TodoService {
             title: title,
             type: type,
             notes: null,
-            project: null,
-            children: null,
             parent: null,
             color: null,
             start: null,
@@ -119,29 +121,27 @@ export class TodoService {
                 afterEnd: true
               },
         };
-        this.http.post<{message: string, todoId: string}>('http://localhost:3000/api/todos/', todo)
+        this.http.post<{message: string, todoId: string}>(BACKEND_URL, todo)
         .subscribe((responseData) => {
             const todoId = responseData.todoId;
             todo._id = todoId;
-            this.todos.push(todo);
+            this.todos.unshift(todo);
             this.todosUpdated.next([...this.todos]);
         });
     }
 
     updateTodo(id: string, title: string, notes: string, type: string, parent: string, isScheduledCal: boolean, start: Date) {
         const todo: Todo = {
-            _id: id, 
+            _id: id,
             title: title,
             type: type,
             notes: notes,
-            project: null,
-            children: null,
             parent: parent,
             isScheduledCal: isScheduledCal,
             color: null,
             start: start,
             draggable: true};
-        this.http.put('http://localhost:3000/api/todos/' + id, todo)
+        this.http.put(BACKEND_URL + id, todo)
         .subscribe(response => {
             const updatedTodos = [...this.todos];
             const oldTodoIndex = updatedTodos.findIndex(t => t._id === todo._id);
@@ -160,7 +160,7 @@ export class TodoService {
             start: start,
             end: end
             };
-        this.http.patch('http://localhost:3000/api/todos/' + id, todo)
+        this.http.patch(BACKEND_URL + id, todo)
         .subscribe(response => {
             const updatedTodos = [...this.todos];
             const oldTodoIndex = updatedTodos.findIndex(t => t._id === todo._id);
@@ -180,7 +180,7 @@ export class TodoService {
             isFocus: isFocus
     
             };
-        this.http.patch('http://localhost:3000/api/todos/' + id, todo)
+        this.http.patch(BACKEND_URL + id, todo)
         .subscribe(response => {
             const updatedTodos = [...this.todos];
             const oldTodoIndex = updatedTodos.findIndex(t => t._id === todo._id);
@@ -191,7 +191,7 @@ export class TodoService {
     }
 
     deleteTodo(todoId: string) {
-        this.http.delete('http://localhost:3000/api/todos/' + todoId)
+        this.http.delete(BACKEND_URL + todoId)
         .subscribe(() => {
             this.todos = this.todos.filter(todo => todo._id !== todoId);
             this.todosUpdated.next([...this.todos]);
